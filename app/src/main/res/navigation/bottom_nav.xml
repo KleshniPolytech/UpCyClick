@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.upcyclick.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz" />
+    <fragment
+        android:id="@+id/scrollFragment"
+        android:name="com.example.upcyclick.ScrollFragment"
+        android:label="fragment_scroll"
+        tools:layout="@layout/fragment_scroll" />
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.example.upcyclick.ShopFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_shop" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.upcyclick.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+</navigation>
