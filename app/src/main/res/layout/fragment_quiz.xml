@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".QuizFragment">
+    tools:context=".quiz.QuizFragment">
 
     <View
         android:id="@+id/quizCoinIcon"
@@ -58,14 +58,15 @@
         android:id="@+id/easyQuizButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button_selector"
         app:layout_constraintBottom_toTopOf="@+id/mediumQuizButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quizDesc"
+        app:layout_constraintVertical_bias="0.19"
         app:layout_constraintVertical_chainStyle="packed">
 
         <TextView
@@ -151,7 +152,6 @@
         android:id="@+id/hardQuizButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:background="@drawable/button_selector"

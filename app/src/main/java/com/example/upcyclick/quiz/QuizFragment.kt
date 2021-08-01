@@ -1,4 +1,4 @@
-package com.example.upcyclick
+package com.example.upcyclick.quiz
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.navigation.findNavController
+import com.example.upcyclick.R
 
 class QuizFragment : Fragment() {
     lateinit var easyButton: RelativeLayout
@@ -33,13 +35,13 @@ class QuizFragment : Fragment() {
 
     private fun initListeners(v: View) {
         easyButton.setOnClickListener {
-            Toast.makeText(context, "easy button", Toast.LENGTH_SHORT).show()
+            v.findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizGameFragment())
         }
         mediumButton.setOnClickListener {
-            Toast.makeText(context, "medium button", Toast.LENGTH_SHORT).show()
+            v.findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizGameFragment())
         }
         hardButton.setOnClickListener {
-            Toast.makeText(context, "hard button", Toast.LENGTH_SHORT).show()
+            v.findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizGameFragment())
         }
 
     }
