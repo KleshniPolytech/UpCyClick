@@ -1,16 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="32dp" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home"
-        tools:layout_editor_absoluteX="-51dp"
-        tools:layout_editor_absoluteY="341dp" />
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/balance"
+        android:textColor="#515151"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal" />
+
+    <TextView
+        android:id="@+id/coin_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/balance_count"
+        android:textColor="@color/black"
+        android:textSize="54sp"
+        app:drawableRightCompat="@drawable/ic_small_up_coin"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <Button
+
+        android:id="@+id/to_quiz_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_selector"
+        android:elevation="12dp"
+        android:fontFamily="@font/roboto_light"
+        android:paddingTop="11dp"
+        android:paddingBottom="10dp"
+        android:stateListAnimator="@null"
+        android:text="@string/quiz"
+        android:textAllCaps="false"
+        android:textSize="37sp"
+        android:translationZ="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/coin_count" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/income"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/to_quiz_button" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbarStyle="outsideInset">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/common_count"
+                    android:layout_width="258dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/button_selector"
+                    android:drawableStart="@drawable/ic_common_scroll"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/roboto"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/common_scroll"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:translationZ="4dp"
+                   />
+
+                <Button
+                    android:id="@+id/rare_count"
+                    android:layout_width="258dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/button_selector"
+                    android:drawableStart="@drawable/ic_common_scroll"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/roboto"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/rare_scroll"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:translationZ="4dp"
+                   />
+
+                <Button
+                    android:id="@+id/legendary_count"
+                    android:layout_width="258dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/button_selector"
+                    android:drawableStart="@drawable/ic_common_scroll"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/roboto"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/legendary_scroll"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:translationZ="4dp"
+                    />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/up_button_selector"
+        android:elevation="2dp"
+        android:fontFamily="@font/roboto_bold"
+        android:stateListAnimator="@null"
+        android:text="@string/up"
+        android:textColor="@color/white"
+        android:textSize="108sp"
+        android:translationZ="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        tools:ignore="TextContrastCheck,TextContrastCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
