@@ -16,16 +16,11 @@ class HomeFragment : Fragment() {
     private lateinit var upButton: Button
     private lateinit var toQuizButton: Button
     private lateinit var coinCountTextView: TextView
-    private var coinCounter = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
-        coinCounter = pref!!.getInt("Count", 0)
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
@@ -33,12 +28,11 @@ class HomeFragment : Fragment() {
         coinCountTextView = view.findViewById(R.id.coin_count)
         toQuizButton = view.findViewById(R.id.to_quiz_button)
 
-
-        coinCountTextView.text = coinCounter.toString()
+        coinCountTextView.text = YourManager.getInstance(this.requireContext()).count.toString()
 
         upButton.setOnClickListener {
-            coinCounter++
-            coinCountTextView.text = coinCounter.toString()
+            YourManager.getInstance(this.requireContext()).count++
+            coinCountTextView.text = YourManager.getInstance(this.requireContext()).count.toString()
         }
 
         toQuizButton.setOnClickListener {
@@ -63,11 +57,9 @@ class HomeFragment : Fragment() {
         val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
         val editor = pref?.edit()
 
-        editor?.putInt("Count", coinCounter)
+        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
 
         editor?.apply()
-
-
     }
 
 
