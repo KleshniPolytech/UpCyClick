@@ -1,56 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text_question"
         android:layout_width="0dp"
-        android:layout_height="21dp"
-        android:layout_marginBottom="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/roboto"
         android:text="Didn't have enough coins?"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
-        app:layout_constraintEnd_toEndOf="@+id/button5"
-        app:layout_constraintStart_toStartOf="@+id/button5" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
-        app:layout_constraintEnd_toEndOf="@+id/button6"
-        app:layout_constraintStart_toStartOf="@+id/button6" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_get_coins"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_selector"
+        android:clickable="true"
+        android:fontFamily="@font/roboto"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="Get coins"
+        android:textAllCaps="false"
+        android:textSize="37sp"
+        app:layout_constraintEnd_toEndOf="@+id/text_question"
+        app:layout_constraintStart_toStartOf="@+id/text_question"
+        app:layout_constraintTop_toBottomOf="@+id/text_question" />
+
+    <Button
+        android:id="@+id/button_quiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_selector"
+        android:clickable="true"
+        android:fontFamily="@font/roboto"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="Quiz"
+        android:textAllCaps="false"
+        android:textSize="37sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_get_coins"
+        app:layout_constraintStart_toStartOf="@+id/button_get_coins"
+        app:layout_constraintTop_toBottomOf="@+id/button_get_coins" />
+
+    <Button
+        android:id="@+id/button_buy_upgrades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_selector"
+        android:clickable="true"
+        android:fontFamily="@font/roboto"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="Buy upgrades"
+        android:textAllCaps="false"
+        android:textSize="37sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_quiz"
+        app:layout_constraintStart_toStartOf="@+id/button_quiz"
+        app:layout_constraintTop_toBottomOf="@+id/button_quiz" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -62,6 +88,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/button_selector"
             android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lay_2">
@@ -76,7 +103,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_rectangle_background" />
+                app:srcCompat="@drawable/ic_rectangle_background" />
 
             <ImageView
                 android:id="@+id/imageView__2"
@@ -107,10 +134,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:lines="2"
+                android:text="Special skills and resources\nare required"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/rare_legend"
-                app:layout_constraintTop_toBottomOf="@+id/rare_legend"
-                tools:text="Special skills and resources\nare required" />
+                app:layout_constraintTop_toBottomOf="@+id/rare_legend" />
 
             <TextView
                 android:id="@+id/impact_legend"
@@ -167,11 +194,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_selector"
             android:clickable="true"
-            android:id="@+id/lay_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -186,7 +213,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_rectangle_background" />
+                app:srcCompat="@drawable/ic_rectangle_background" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -217,23 +244,22 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:lines="2"
+                android:text="Easy to reproduce at home, \ndoes not require much effort"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/rare_common"
-                app:layout_constraintTop_toBottomOf="@+id/rare_common"
-                tools:text="Easy to reproduce at home, \ndoes not require much effort" />
+                app:layout_constraintTop_toBottomOf="@+id/rare_common" />
 
             <TextView
                 android:id="@+id/impact_common"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="+0,5/sec "
+                android:text="+1,0/sec "
                 android:textColor="@color/primaryColor"
                 android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/descr_common"
-                app:layout_constraintTop_toBottomOf="@+id/descr_common"
                 app:drawableRightCompat="@drawable/ic_up_very_small"
-                />
+                app:layout_constraintStart_toStartOf="@+id/descr_common"
+                app:layout_constraintTop_toBottomOf="@+id/descr_common" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -297,7 +323,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_rectangle_background" />
+                app:srcCompat="@drawable/ic_rectangle_background" />
 
             <ImageView
                 android:id="@+id/imageView_2"
@@ -328,10 +354,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:lines="2"
+                android:text="A little more complicated\nthan usual"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/rare_rare"
-                app:layout_constraintTop_toBottomOf="@+id/rare_rare"
-                tools:text="A little more complicated\nthan usual" />
+                app:layout_constraintTop_toBottomOf="@+id/rare_rare" />
 
             <TextView
                 android:id="@+id/impact_rare"
@@ -390,3 +416,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
