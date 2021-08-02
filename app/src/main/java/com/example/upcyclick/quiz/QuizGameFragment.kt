@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
 import androidx.navigation.findNavController
 import com.example.upcyclick.R
+import com.example.upcyclick.YourManager
 import com.example.upcyclick.database.entity.Question
 
 class QuizGameFragment : Fragment() {
@@ -20,19 +21,19 @@ class QuizGameFragment : Fragment() {
         val dif: Int,
         val text: String,
         val answers: List<String>,
-        val right: Int,
+        val right: String,
         val desc: String)
 
     private val easyQuestions: MutableList<Q> = mutableListOf(
         Q(dif = 1,
             text = "2 + 2 = ?",
             answers = listOf("1", "2", "3", "4"),
-            right = 3,
+            right = "4",
             desc = "2 + 2 = 4"),
         Q(dif = 1,
             text = "2 + 5 = ?",
             answers = listOf("4", "5", "6", "7"),
-            right = 3,
+            right = "7",
             desc = "2 + 2 = 4")
     )
 
@@ -40,12 +41,12 @@ class QuizGameFragment : Fragment() {
         Q(dif = 2,
             text = "5 * 3 = ?",
             answers = listOf("15", "13", "14", "12"),
-            right = 0,
+            right = "15",
             desc = "2 + 2 = 4"),
         Q(dif = 2,
             text = "7 * 9 = ?",
             answers = listOf("54", "49", "63", "77"),
-            right = 2,
+            right = "63",
             desc = "2 + 2 = 4")
     )
 
@@ -53,12 +54,12 @@ class QuizGameFragment : Fragment() {
         Q(dif = 3,
             text = "lol?",
             answers = listOf("lol", "lmao", "rofl", "shrek"),
-            right = 0,
+            right = "lol",
             desc = "2 + 2 = 4"),
         Q(dif = 3,
             text = "2 - 2 = ?",
             answers = listOf("0", "1", "2", "3"),
-            right = 0,
+            right = "0",
             desc = "2 + 2 = 4")
     )
 
@@ -67,7 +68,7 @@ class QuizGameFragment : Fragment() {
     private lateinit var currentQuestion: Q
     private lateinit var answers: MutableList<String>
     private var questionIndex = 0
-    private val numQuestions = 2
+    private var numQuestions = 0
 
     private lateinit var firstAnswer: RelativeLayout
     private lateinit var secondAnswer: RelativeLayout
@@ -91,7 +92,10 @@ class QuizGameFragment : Fragment() {
     private lateinit var descCorrectness: TextView
     private lateinit var descText: TextView
 
-    private var difficult: Int = 3
+    private var difficult: Int = 0
+    private lateinit var wonCoins: TextView
+
+    lateinit var appInstance: YourManager
 
     private var questionResult = false
 
@@ -107,7 +111,7 @@ class QuizGameFragment : Fragment() {
         init(view)
         initListeners(view)
 
-        setQuestion()
+        shuffleQuestions()
         drawQuestion()
         drawAnswers()
 
@@ -138,11 +142,17 @@ class QuizGameFragment : Fragment() {
         descCorrectness = v.findViewById(R.id.correctnessQuiz)
         descText = v.findViewById(R.id.descriptionQuiz)
 
+        appInstance = YourManager.getInstance(this.requireContext())
+
+        difficult = appInstance.currentQuizDifficulty
+
         when(difficult) {
             1 -> questions = easyQuestions
             2 -> questions = mediumQuestions
             3 -> questions = hardQuestions
         }
+
+        numQuestions = questions.size
     }
 
     private fun initListeners(v: View) {
@@ -185,13 +195,14 @@ class QuizGameFragment : Fragment() {
         var index = 0
         for (checkbox in checkBoxes) {
             if (checkbox.isChecked) {
-                if (checkbox.text == currentQuestion.answers[currentQuestion.right]) {
+                if (checkbox.text == currentQuestion.right) {
                     questionResult = true
                     showRightAnswer(index)
                     questionIndex++
                     if (questionIndex < numQuestions) {
                         currentQuestion = questions[questionIndex]
                         setQuestion()
+                        for (i in answers) Log.d("testing", i)
                     }
                 }
                 else {
@@ -214,7 +225,7 @@ class QuizGameFragment : Fragment() {
                                 this.context?.let { ContextCompat.getDrawable(it, R.drawable.wrong_quiz_button_selector) }
                         }
                     }
-                    showRightAnswer(currentQuestion.right)
+                    showRightAnswer(currentQuestion.answers.indexOf(currentQuestion.right))
                 }
                 firstAnswer.isEnabled = false
                 secondAnswer.isEnabled = false
@@ -231,7 +242,14 @@ class QuizGameFragment : Fragment() {
         }
     }
 
+    private fun shuffleQuestions() {
+        questions.shuffle()
+        questionIndex = 0
+        setQuestion()
+    }
+
     private fun setQuestion() {
+        Log.d("testing", "here")
         currentQuestion = questions[questionIndex]
         answers = currentQuestion.answers.toMutableList()
         answers.shuffle()
@@ -263,10 +281,11 @@ class QuizGameFragment : Fragment() {
     }
 
     private fun drawAnswers() {
-        checkBox1.text = currentQuestion.answers[0]
-        checkBox2.text = currentQuestion.answers[1]
-        checkBox3.text = currentQuestion.answers[2]
-        checkBox4.text = currentQuestion.answers[3]
+        Log.d("testing", "drawAnswers")
+        checkBox1.text = answers[0]
+        checkBox2.text = answers[1]
+        checkBox3.text = answers[2]
+        checkBox4.text = answers[3]
     }
 
     private fun drawDescription() {
