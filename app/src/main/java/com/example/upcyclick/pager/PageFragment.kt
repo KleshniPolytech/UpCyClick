@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.example.upcyclick.R
 import com.example.upcyclick.ShopFragment
 import com.example.upcyclick.YourManager
+import kotlin.concurrent.thread
 
 
 class PageFragment : Fragment() {
@@ -98,3 +99,4 @@ class PageFragment : Fragment() {
         }
     }
 }
+
