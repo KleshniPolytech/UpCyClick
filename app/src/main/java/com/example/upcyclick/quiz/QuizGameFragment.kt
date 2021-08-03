@@ -11,10 +11,14 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.upcyclick.R
 import com.example.upcyclick.YourManager
 import com.example.upcyclick.database.entity.Question
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class QuizGameFragment : Fragment() {
     data class Q(
@@ -93,9 +97,10 @@ class QuizGameFragment : Fragment() {
     private lateinit var descText: TextView
 
     private var difficult: Int = 0
-    private lateinit var wonCoins: TextView
 
-    lateinit var appInstance: YourManager
+    private lateinit var appInstance: YourManager
+    private lateinit var coinCount: TextView
+    private lateinit var coroutine: Job
 
     private var questionResult = false
 
@@ -110,6 +115,10 @@ class QuizGameFragment : Fragment() {
 
         init(view)
         initListeners(view)
+
+        coroutine = lifecycleScope.launch {
+            updateCoinCount()
+        }
 
         shuffleQuestions()
         drawQuestion()
@@ -153,6 +162,8 @@ class QuizGameFragment : Fragment() {
         }
 
         numQuestions = questions.size
+
+        coinCount = v.findViewById(R.id.quizGameCoinCount)
     }
 
     private fun initListeners(v: View) {
@@ -315,5 +326,17 @@ class QuizGameFragment : Fragment() {
         for (checkbox in checkBoxes) checkbox.isChecked = false
         drawQuestion()
         drawAnswers()
+    }
+
+    private suspend fun updateCoinCount() {
+        lifecycleScope.launch {
+            coinCount.text = appInstance.count.toString()
+            delay(1000)
+        }
+    }
+
+    override fun onStop() {
+        coroutine.cancel()
+        super.onStop()
     }
 }
