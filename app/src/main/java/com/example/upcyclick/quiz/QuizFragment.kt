@@ -6,16 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.upcyclick.R
 import com.example.upcyclick.YourManager
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class QuizFragment : Fragment() {
-    lateinit var easyButton: RelativeLayout
-    lateinit var mediumButton: RelativeLayout
-    lateinit var hardButton: RelativeLayout
+    private lateinit var easyButton: RelativeLayout
+    private lateinit var mediumButton: RelativeLayout
+    private lateinit var hardButton: RelativeLayout
 
-    lateinit var appInstance: YourManager
+    private lateinit var appInstance: YourManager
+    private lateinit var coroutine: Job
+
+    private lateinit var coinCount: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +34,10 @@ class QuizFragment : Fragment() {
         init(view)
         initListeners(view)
 
+        coroutine = lifecycleScope.launch {
+            updateCoinCount()
+        }
+
         return view
     }
 
@@ -35,6 +47,8 @@ class QuizFragment : Fragment() {
         hardButton = v.findViewById(R.id.hardQuizButton)
 
         appInstance = YourManager.getInstance(this.requireContext())
+
+        coinCount = v.findViewById(R.id.quizCoinCount)
     }
 
     private fun initListeners(v: View) {
@@ -50,5 +64,17 @@ class QuizFragment : Fragment() {
             appInstance.currentQuizDifficulty = 3
             v.findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizGameFragment())
         }
+    }
+
+    private suspend fun updateCoinCount() {
+        lifecycleScope.launch {
+            coinCount.text = appInstance.count.toString()
+            delay(1000)
+        }
+    }
+
+    override fun onStop() {
+        coroutine.cancel()
+        super.onStop()
     }
 }
