@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/common_buy_cs" >
+        <Constraint
+            android:id="@+id/lay_1"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/do_buy_cs" >
+        <Constraint
+            android:id="@+id/lay_1"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
+            android:translationY="50dp" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/common_buy_cs"
+        motion:constraintSetEnd="@+id/do_buy_cs"
+        android:id="@+id/tr1">
+    </Transition>
+    <Transition
+        motion:constraintSetStart="@+id/do_buy_cs"
+        motion:constraintSetEnd="@+id/common_buy_cs"
+        motion:autoTransition="animateToEnd"
+        />
+
+    <ConstraintSet android:id="@+id/rare_buy_cs" >
+        <Constraint
+            android:id="@+id/lay_2"
+            motion:layout_constraintEnd_toEndOf="@id/lay_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/lay_1"
+            motion:layout_constraintStart_toStartOf="@+id/lay_1"
+            android:layout_marginTop="16dp" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/do_buy_cs_2" >
+        <Constraint
+            android:id="@+id/lay_2"
+            motion:layout_constraintEnd_toEndOf="@id/lay_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/lay_1"
+            motion:layout_constraintStart_toStartOf="@+id/lay_1"
+            android:visibility="invisible"
+            android:translationY="50dp"
+            android:layout_marginTop="16dp" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/rare_buy_cs"
+        motion:constraintSetEnd="@+id/do_buy_cs_2"
+        android:id="@+id/tr2">
+    </Transition>
+    <Transition
+        motion:constraintSetStart="@+id/do_buy_cs_2"
+        motion:constraintSetEnd="@+id/rare_buy_cs"
+        motion:autoTransition="animateToEnd"
+        />
+
+    <ConstraintSet android:id="@+id/legendary_buy_cs" >
+        <Constraint
+            android:id="@+id/lay_3"
+            motion:layout_constraintEnd_toEndOf="@id/lay_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintStart_toStartOf="@id/lay_2"
+            motion:layout_constraintTop_toBottomOf="@+id/lay_2"
+            android:layout_marginTop="16dp" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/do_buy_cs_3" >
+        <Constraint
+            android:id="@+id/lay_3"
+            motion:layout_constraintEnd_toEndOf="@id/lay_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/lay_2"
+            motion:layout_constraintStart_toStartOf="@id/lay_2"
+            android:visibility="invisible"
+            android:translationY="50dp"
+            android:layout_marginTop="16dp" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/legendary_buy_cs"
+        motion:constraintSetEnd="@+id/do_buy_cs_3"
+        android:id="@+id/tr3">
+    </Transition>
+    <Transition
+        motion:constraintSetStart="@+id/do_buy_cs_3"
+        motion:constraintSetEnd="@+id/legendary_buy_cs"
+        motion:autoTransition="animateToEnd"
+        />
+
+</MotionScene>
