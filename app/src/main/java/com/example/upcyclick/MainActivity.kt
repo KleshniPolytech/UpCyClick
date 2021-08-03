@@ -1,5 +1,6 @@
 package com.example.upcyclick
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -36,5 +37,18 @@ class MainActivity : AppCompatActivity() {
             .toBuilder()
             .setAllCorners(CornerFamily.ROUNDED, radius)
             .build()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        onSave()
+    }
+
+
+    private fun onSave() {
+        val pref = applicationContext?.getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val editor = pref?.edit()
+        editor?.putInt("Count",  YourManager.getInstance(applicationContext).count)
+        editor?.apply()
     }
 }

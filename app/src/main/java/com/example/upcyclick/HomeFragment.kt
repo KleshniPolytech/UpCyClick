@@ -44,23 +44,24 @@ class HomeFragment : Fragment() {
 //        }
 
 
+
         return view
     }
 
-    override fun onStop() {
-        super.onStop()
-        onSave()
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        //onSave()
+//    }
 
 
-    private fun onSave() {
-        val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
-        val editor = pref?.edit()
-
-        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
-
-        editor?.apply()
-    }
+//    private fun onSave() {
+//        val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
+//        val editor = pref?.edit()
+//
+//        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
+//
+//        editor?.apply()
+//    }
 
 
 //    private suspend fun updateCounter(){
