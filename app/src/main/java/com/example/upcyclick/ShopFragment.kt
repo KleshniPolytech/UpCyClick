@@ -1,6 +1,7 @@
 package com.example.upcyclick
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Layout
 import androidx.fragment.app.Fragment
@@ -15,11 +16,15 @@ import com.example.upcyclick.pager.SampleFragmentPagerAdapter
 
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.example.upcyclick.pager.PageFragment
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 
 
 class ShopFragment : Fragment() {
+
+    var tvCoins: TextView? = null
+
     @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +81,29 @@ class ShopFragment : Fragment() {
             }
         })
 
+        tvCoins = view.findViewById<TextView>(R.id.coins)
+        println(YourManager.getInstance(this.requireContext()).count)
+        tvCoins?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
 
         return view
     }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        onSave()
+    }
+
+    private fun onSave() {
+        val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val editor = pref?.edit()
+
+        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
+
+        editor?.apply()
+    }
+
 }
