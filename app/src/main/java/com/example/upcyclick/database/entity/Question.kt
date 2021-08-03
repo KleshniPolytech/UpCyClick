@@ -5,10 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "questions")
 data class Question(
-    @PrimaryKey(autoGenerate = true) var _id: Int,
     var difficulty: Int,
     var question: String,
     var answers: String,
     var rightAnswer: String,
-    var description: String
-)
+    var description: String,
+    var imageId: Int
+){
+    @PrimaryKey(autoGenerate = true) var _id: Int=0
+}
+

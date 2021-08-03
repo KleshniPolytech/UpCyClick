@@ -7,7 +7,7 @@ import com.example.upcyclick.database.entity.Scroll
 public interface ScrollDao {
     //Здесь находятся все запросы для этой сущности (можно добавлять свои сколько угодно)
     @Insert
-    fun insert(scroll: Scroll)
+    fun insert(vararg scroll: Scroll)
 
     @Update
     fun update(scroll: Scroll)

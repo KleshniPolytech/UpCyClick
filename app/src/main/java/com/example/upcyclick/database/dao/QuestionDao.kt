@@ -7,7 +7,7 @@ import com.example.upcyclick.database.entity.Question
 interface QuestionDao {
     //Здесь находятся все запросы для этой сущности (можно добавлять свои сколько угодно)
     @Insert
-    fun insert(question: Question)
+    fun insert(vararg question: Question)
 
     @Update
     fun update(question: Question)
