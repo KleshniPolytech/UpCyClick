@@ -1,11 +1,14 @@
 package com.example.upcyclick
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.example.upcyclick.database.UpDB
 import com.example.upcyclick.database.entity.Question
 import com.example.upcyclick.database.entity.Scroll
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class YourManager private constructor(var context: Context) {
 
@@ -13,22 +16,25 @@ class YourManager private constructor(var context: Context) {
 
     var currentQuizDifficulty: Int = 0
 
-    val DB: UpDB
+    var upDB: UpDB? = null
 
     init {
         val pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         count = pref!!.getInt("Count", 0)
 
-        DB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
+        CoroutineScope(Dispatchers.IO).launch {
+            upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
             //        if (DB.scrollDao().getAll().isEmpty()) {
             fillScrollDB()
             fillQuestionDB()
-        //}
+            //}
+            this.cancel()
+        }
     }
 
     private fun fillQuestionDB() {
 
-        DB.questionDao().insert(
+        upDB?.questionDao()?.insert(
             Question(
                 1,
                 "Food waste reduction is one of the most important things individuals can do to help reverse global warming.",
@@ -146,17 +152,16 @@ class YourManager private constructor(var context: Context) {
                 "Upcycling is",
                 "turning trash into valuable objects|another name for recycling|turning trash into something less valuable|none of the above",
                 "turning trash into valuable objects",
-                "Fight climate change with diet change! Your food choices make an impact on our global environment. There is not one perfect diet for everyone, but we can all do our part to make the relationship with food we eat more sustainable!",
-                R.drawable.q13
+                "", //TODO
+                R.drawable.q13 //TODO
+            ),
+
             )
-
-
-        )
 
     }
 
     private fun fillScrollDB() {
-        DB.scrollDao().insert(
+        upDB?.scrollDao()?.insert(
             Scroll(
                 "Baby food pouch",
                 "Baby_Food_Pouch_Bib_Instructions(Leg).pdf",
