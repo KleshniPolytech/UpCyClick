@@ -5,11 +5,15 @@ import android.widget.TextView
 
 
 import android.os.Bundle
+import android.transition.Transition
 
 import android.view.ViewGroup
 
 import android.view.LayoutInflater
+import android.view.SurfaceControl
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.motion.widget.MotionScene
 import androidx.constraintlayout.widget.ConstraintLayout
 
 import androidx.fragment.app.Fragment
@@ -42,11 +46,15 @@ class PageFragment : Fragment() {
 
         }
         else{
+            val qwe = view.findViewById<MotionLayout>(R.id.constraintLayout)
+
             val commonScroll = view.findViewById<ConstraintLayout>(R.id.lay_1)
             commonScroll.setOnClickListener{
                 if (YourManager.getInstance(this.requireContext()).count >= commonPrice){
                     YourManager.getInstance(this.requireContext()).count -= commonPrice
                     tvCoins2?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+                    qwe.setTransition(R.id.tr1)
+                    qwe.transitionToEnd()
                     //добавление данных о покупке рецепта в бд
                     //открытие PDF с рецептом
                 }
@@ -56,6 +64,8 @@ class PageFragment : Fragment() {
                 if (YourManager.getInstance(this.requireContext()).count >= rarePrice){
                     YourManager.getInstance(this.requireContext()).count -= rarePrice
                     tvCoins2?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+                    qwe.setTransition(R.id.tr2)
+                    qwe.transitionToEnd()
                     //добавление данных о покупке рецепта в бд
                     //открытие PDF с рецептом
                 }
@@ -65,11 +75,12 @@ class PageFragment : Fragment() {
                 if (YourManager.getInstance(this.requireContext()).count >= legendaryPrice){
                     YourManager.getInstance(this.requireContext()).count -= legendaryPrice
                     tvCoins2?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+                    qwe.setTransition(R.id.tr3)
+                    qwe.transitionToEnd()
                     //добавление данных о покупке рецепта в бд
                     //открытие PDF с рецептом
                 }
             }
-
 
         }
 
