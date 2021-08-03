@@ -15,12 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
-        app:elevation="16dp"
         app:itemIconSize="32dp"
         app:labelVisibilityMode="labeled"
-
         app:itemIconTint="@drawable/simple_selector"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
