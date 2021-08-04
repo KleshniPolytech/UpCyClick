@@ -6,10 +6,7 @@ import com.example.upcyclick.database.UpDB
 import com.example.upcyclick.database.entity.Question
 import com.example.upcyclick.database.entity.Scroll
 import com.example.upcyclick.database.entity.Upgrade
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class AppSingleton private constructor(var context: Context) {
 
@@ -19,19 +16,32 @@ class AppSingleton private constructor(var context: Context) {
 
     var upDB: UpDB? = null
 
+    var availableCommonScrollList: MutableList<Scroll>? = null
+    var boughtCommonScrollList: MutableList<Scroll>? = null
+    var availableUpgradeList: MutableList<Upgrade>? = null
+    var boughtUpgradeList: MutableList<Upgrade>? = null
+
+
     init {
         val pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         count = pref!!.getInt("Count", 0)
 
         CoroutineScope(Dispatchers.IO).launch {
-            upDB = Room.databaseBuilder(context, UpDB::class.java, "UpDB").build()
+            upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
             if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
                 fillUpgradeDB()
                 fillScrollDB()
                 fillQuestionDB()
             }
+
+            availableCommonScrollList = upDB?.scrollDao()?.getAvailable(1)
+            boughtCommonScrollList = upDB?.scrollDao()?.getBought(1)
+            availableUpgradeList = upDB?.upgradeDao()?.getAvailable()
+            boughtUpgradeList = upDB?.upgradeDao()?.getBought()
+
             this.cancel()
         }
+
     }
 
     private fun fillUpgradeDB() {

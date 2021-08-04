@@ -21,4 +21,11 @@ public interface UpgradeDao {
 
     @Query("DELETE FROM upgrades")
     fun deleteAll()
+
+    @Query("SELECT * FROM upgrades WHERE purchased = 0")
+    fun getAvailable(): MutableList<Upgrade>
+
+    @Query("SELECT * FROM upgrades WHERE purchased = 1")
+    fun getBought(): MutableList<Upgrade>
+
 }
