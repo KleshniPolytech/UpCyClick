@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.upcyclick.R
+
 import com.example.upcyclick.AppSingleton
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -20,7 +21,9 @@ class QuizFragment : Fragment() {
     private lateinit var mediumButton: RelativeLayout
     private lateinit var hardButton: RelativeLayout
 
+
     private lateinit var appInstance: AppSingleton
+
     private lateinit var coroutine: Job
 
     private lateinit var coinCount: TextView
@@ -45,6 +48,7 @@ class QuizFragment : Fragment() {
         easyButton = v.findViewById(R.id.easyQuizButton)
         mediumButton = v.findViewById(R.id.mediumQuizButton)
         hardButton = v.findViewById(R.id.hardQuizButton)
+
 
         appInstance = AppSingleton.getInstance(this.requireContext())
 

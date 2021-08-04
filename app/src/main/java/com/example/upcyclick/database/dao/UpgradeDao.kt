@@ -8,7 +8,9 @@ import com.example.upcyclick.database.entity.Upgrade
 public interface UpgradeDao {
     //Здесь находятся все запросы для этой сущности (можно добавлять свои сколько угодно)
     @Insert
+
     fun insert(vararg upgrade: Upgrade)
+
 
     @Update
     fun update(upgrade: Upgrade)
