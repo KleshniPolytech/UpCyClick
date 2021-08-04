@@ -7,10 +7,7 @@ import com.example.upcyclick.database.UpDB
 import com.example.upcyclick.database.entity.Question
 import com.example.upcyclick.database.entity.Scroll
 import com.example.upcyclick.database.entity.Upgrade
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class AppSingleton private constructor(var context: Context) {
 
@@ -24,6 +21,27 @@ class AppSingleton private constructor(var context: Context) {
 
     var upgradeCount: Int = 1
 
+    var availableCommonScrollList: MutableList<Scroll>? = null
+    var boughtCommonScrollList: MutableList<Scroll>? = null
+    var availableUpgradeList: MutableList<Upgrade>? = null
+    var boughtUpgradeList: MutableList<Upgrade>? = null
+
+    var drawableIndexes = arrayOf(
+        R.drawable.q1,
+        R.drawable.q2,
+        R.drawable.q3,
+        R.drawable.q4,
+        R.drawable.q5,
+        R.drawable.q6,
+        R.drawable.q7,
+        R.drawable.q8,
+        R.drawable.q9,
+        R.drawable.q10,
+        R.drawable.q11,
+        R.drawable.q12,
+        R.drawable.q13
+    )
+
     init {
         val pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         count = pref!!.getInt("Count", 0)
@@ -35,6 +53,19 @@ class AppSingleton private constructor(var context: Context) {
                 fillScrollDB()
                 fillQuestionDB()
             }
+
+            if (upDB?.questionDao()?.getAll()?.isEmpty() == true) {
+                fillScrollDB()
+            }
+            if (upDB?.upgradeDao()?.getAll()?.isEmpty() == true) {
+                fillQuestionDB()
+            }
+
+            availableCommonScrollList = upDB?.scrollDao()?.getAvailable(1)
+            boughtCommonScrollList = upDB?.scrollDao()?.getBought(1)
+            availableUpgradeList = upDB?.upgradeDao()?.getAvailable()
+            boughtUpgradeList = upDB?.upgradeDao()?.getBought()
+
 
             updatesList = upDB!!.upgradeDao().getAcquiredUpdates()
             Log.d("LIST1", updatesList.size.toString())
@@ -106,23 +137,23 @@ class AppSingleton private constructor(var context: Context) {
                 "True|False",
                 "True",
                 "Food waste is a massive environmental issue. Food that is never eaten or used still has environmental costs — from the land and resources used to make the food to the transporting of ingredients to stores. We can all do our part to reduce our food waste to help the planet.",
-                R.drawable.q1
+                0
             ),
             Question(
-                1,
+                2,
                 "How much of the world’s food is never eaten, which means that the food's production wasted land and resources and emitted unnecessary greenhouse gases?",
                 "10%|25%|33%|50%",
                 "25%",
                 "Food is wasted from more than what you throw away at home. Crops can be thrown out due to weather, low market prices, or high labor costs. Grocery stores will often overstock their shelves and must throw out excess product as well.",
-                R.drawable.q2
+                1
             ),
             Question(
-                1,
+                3,
                 "Of the estimated 1 billion tons of food that goes to waste every year, much of it is perfectly edible and nutritious.",
                 "True|False",
                 "True",
                 "Criteria for acceptable - or “market-grade” - food often relies on how good it looks, not on its nutrition or safety for people to eat.",
-                R.drawable.q3
+                2
             ),
             Question(
                 1,
@@ -130,47 +161,39 @@ class AppSingleton private constructor(var context: Context) {
                 "Least expensive use|Highest and best use|Most popular use|Use as pet food",
                 "Highest and best use",
                 "Upcycling food is an example of a “value-added product,” like turning flour into bread, but also captures the value of upcycled ingredients and saves them from being wasted.",
-                R.drawable.q4
+                3
             ),
             Question(
-                1,
+                2,
                 "What is an “upcycled food?”",
                 "A food that has gone slightly ‘off’ but can still be used to make another food; for example, over-ripe apples can be used in applesauce.|A food that’s been changed from a basic ingredient to a value-added food; for example, a potato that’s been turned into a potato chip.|Food that’s been creatively saved from becoming food waste and put to its best and highest use; for example, the husk of a coffee bean, called a ‘coffee cherry,’ that’s used to make flour for cookies.|A food that was rescued from turning into waste after it reached its expiration date; for example, milk that’s still good but has gone a few days past the stamped “best by” date.",
                 "Food that’s been creatively saved from becoming food waste and put to its best and highest use; for example, the husk of a coffee bean, called a ‘coffee cherry,’ that’s used to make flour for cookies.",
                 "Upcycling food is inherently sustainable, as it makes the most out of each piece of food. Upcycling is able to do more with less!",
-                R.drawable.q5
+                4
             ),
             Question(
-                1,
+                3,
                 "Bananas that are just a few centimeters too short, or a few days too ripe, should be discarded before shipping because they are unusable and will waste resources in transit.",
                 "True|False",
                 "False",
                 "Bananas that don’t qualify to be exported because they’re too small or too ripe are great candidates for upcycling into delicious snacks like chewy bites or cookie brittle!",
-                R.drawable.q6
+                5
             ),
             Question(
-                1,
-                "Which of the following resources are wasted or lost when food that is produced goes uneaten? (Select the ONE best answer.)",
-                "Financial capital|None of the above|Fertilizer|Energy",
-                "All of the above",
-                "Food waste wastes more than food! Upcycling food saves resources by giving a new purpose to ingredients that would otherwise get thrown away.",
-                R.drawable.q7
-            ),
-            Question(
-                1,
+                2,
                 "The Upcycled Food Association estimates that as of January 2021, there are already ___ upcycled products sold in the United States:",
-                "Financial capital|None of the above|Fertilizer|Energy",
+                "All of the above|None of the above|Fertilizer|Energy",
                 "All of the above",
                 "Food waste wastes more than food! Upcycling food saves resources by giving a new purpose to ingredients that would otherwise get thrown away.",
-                R.drawable.q7
+                6
             ),
             Question(
-                1,
+                3,
                 "Which of the following resources are wasted or lost when food that is produced goes uneaten? (Select the ONE best answer.)",
                 "175|400|250|625",
                 "400",
                 "Upcycling is a no-brainer! Groups around the globe are finding new ways to reimagine our global food production to make sure our resources are used more efficiently and our environment is protected in the process.",
-                R.drawable.q8
+                7
             ),
             Question(
                 1,
@@ -178,23 +201,23 @@ class AppSingleton private constructor(var context: Context) {
                 "Feed a growing population|Reduce greenhouse gas emission|Save our forests|All of the above",
                 "All of the above",
                 "Upcycling Food means more than tasty and nutritious foods. The supply chain process directly benefits the natural environment by making the most out of our farmland and its resources.",
-                R.drawable.q9
+                8
             ),
             Question(
-                1,
+                2,
                 "If extracts from an avocado pit are used as natural dyes for clothing, the avocado pit was officially 'upcycled.'",
                 "True|False",
                 "True",
                 "This one is a little tricky! Upcycled foods are for human consumption, but upcycled ingredients could be included in animal feed, pet food, cosmetics, clothing and more.",
-                R.drawable.q10
+                9
             ),
             Question(
-                1,
+                3,
                 "When foods like bananas are upcycled, small, local farmers benefit by selling more of their crop and getting paid fairly for their labor.",
                 "True|False",
                 "True",
                 "Small farmers often struggle to compete with major producers, and are especially vulnerable to changes in the value of their crops. Upcycling foods opens new markets for local farmers to sell their excess product.",
-                R.drawable.q11
+                10
             ),
             Question(
                 1,
@@ -202,7 +225,7 @@ class AppSingleton private constructor(var context: Context) {
                 "True|False",
                 "False",
                 "Just the opposite! Upcycling foods reduces air and water pollution.",
-                R.drawable.q12
+                11
             ),
             Question(
                 1,
@@ -210,18 +233,17 @@ class AppSingleton private constructor(var context: Context) {
                 "Learning more about upcycled foods|Supporting brands that use upcycled ingredients|Planning my meals so I know how much I need at the store|Using a tool like a Foodprint Calculator to understand the impact of my food choices",
                 "All of the above",
                 "Fight climate change with diet change! Your food choices make an impact on our global environment. There is not one perfect diet for everyone, but we can all do our part to make the relationship with food we eat more sustainable!",
-                R.drawable.q13
+                12
             ),
             Question(
                 1,
                 "Upcycling is",
                 "turning trash into valuable objects|another name for recycling|turning trash into something less valuable|none of the above",
                 "turning trash into valuable objects",
-                "", //TODO
-                R.drawable.q13 //TODO
+                "The main objective of upcycling is to create some more valuable objects than they were before", //TODO
+                12 //TODO
             ),
-
-            )
+        )
 
     }
 

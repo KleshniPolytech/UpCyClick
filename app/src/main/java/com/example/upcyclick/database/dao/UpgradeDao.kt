@@ -24,4 +24,11 @@ public interface UpgradeDao {
 
     @Query("SELECT * FROM upgrades WHERE purchased=1")
     fun getAcquiredUpdates(): List<Upgrade>
+
+    @Query("SELECT * FROM upgrades WHERE purchased = 0")
+    fun getAvailable(): MutableList<Upgrade>
+
+    @Query("SELECT * FROM upgrades WHERE purchased = 1")
+    fun getBought(): MutableList<Upgrade>
+
 }

@@ -20,4 +20,7 @@ interface QuestionDao {
 
     @Query("DELETE FROM questions")
     fun deleteAll()
+
+    @Query("SELECT * FROM questions WHERE difficulty=:dif")
+    fun getAllByDif(dif: Int): List<Question>
 }

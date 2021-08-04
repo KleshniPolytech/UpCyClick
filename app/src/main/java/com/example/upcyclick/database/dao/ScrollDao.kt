@@ -2,7 +2,6 @@ package com.example.upcyclick.database.dao
 
 import androidx.room.*
 import com.example.upcyclick.database.entity.Scroll
-import com.example.upcyclick.database.entity.Upgrade
 
 @Dao
 public interface ScrollDao {
@@ -24,4 +23,14 @@ public interface ScrollDao {
 
     @Query("SELECT * FROM scrolls WHERE purchased=1")
     fun getAllPurchasedScrolls(): List<Scroll>
+
+    @Query("SELECT * FROM scrolls WHERE purchased = 0 and typeId = :rarity")
+    fun getAvailable(rarity: Int): MutableList<Scroll>
+
+    @Query("SELECT * FROM scrolls WHERE purchased = 1 and typeId = :rarity")
+    fun getBought(rarity: Int): MutableList<Scroll>
+
+    @Query("UPDATE scrolls SET purchased = 1 WHERE name = :name")
+    fun buyScroll(name: String): Unit
+
 }
