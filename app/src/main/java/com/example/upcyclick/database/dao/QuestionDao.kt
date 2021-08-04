@@ -4,7 +4,7 @@ import androidx.room.*
 import com.example.upcyclick.database.entity.Question
 
 @Dao
-interface QuestionDao {
+public interface QuestionDao {
     //Здесь находятся все запросы для этой сущности (можно добавлять свои сколько угодно)
     @Insert
     fun insert(vararg question: Question)

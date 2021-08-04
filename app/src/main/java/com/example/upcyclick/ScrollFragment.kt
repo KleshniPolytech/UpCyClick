@@ -19,8 +19,10 @@ class ScrollFragment : Fragment() {
     private lateinit var donthave: TextView
     private lateinit var toShop: Button
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_scroll, container, false)
 
@@ -29,27 +31,30 @@ class ScrollFragment : Fragment() {
         recyclerView
         return view
     }
+
     private fun init(v: View) {
         recyclerView = v.findViewById(R.id.recyclerViewScrolls)
         plusShop = v.findViewById(R.id.plusShop)
         donthave = v.findViewById(R.id.donthavelbl)
-        toShop   = v.findViewById(R.id.to_shop_button)
+        toShop = v.findViewById(R.id.to_shop_button)
 
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        val list = mutableListOf<Scroll>(Scroll("1",true,"3","4")
-            ,Scroll("1",true,"3","4")
-            ,Scroll("1",true,"3","4")
-            ,Scroll("1",true,"3","4")
+        val list = mutableListOf<Scroll>(
+            Scroll("1", "" , true, "3", 4),
+            Scroll("1", "" , true, "3", 4),
+            Scroll("1", "" , true, "3", 4),
+            Scroll("1", "" , true, "3", 4)
         )
-        recyclerView.adapter = CustomRecyclerAdapter(list )
-        list.add(Scroll("1",true,"3aa","4"))
+        recyclerView.adapter = CustomRecyclerAdapter(list)
+        list.add(Scroll("1", "" , true, "3aa", 4))
 
-        if(list.size!=0) hide()
+        if (list.size != 0) hide()
     }
-    private fun hide(){
+
+    private fun hide() {
         plusShop.visibility = View.INVISIBLE
-        donthave.visibility  = View.INVISIBLE
-        toShop.visibility  = View.INVISIBLE
+        donthave.visibility = View.INVISIBLE
+        toShop.visibility = View.INVISIBLE
     }
 }
