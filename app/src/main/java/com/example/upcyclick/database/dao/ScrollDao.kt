@@ -2,6 +2,7 @@ package com.example.upcyclick.database.dao
 
 import androidx.room.*
 import com.example.upcyclick.database.entity.Scroll
+import com.example.upcyclick.database.entity.Upgrade
 
 @Dao
 public interface ScrollDao {
@@ -20,4 +21,7 @@ public interface ScrollDao {
 
     @Query("DELETE FROM scrolls")
     fun deleteAll()
+
+    @Query("SELECT * FROM scrolls WHERE purchased=1")
+    fun getAllPurchasedScrolls(): List<Scroll>
 }

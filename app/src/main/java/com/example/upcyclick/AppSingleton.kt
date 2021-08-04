@@ -1,6 +1,7 @@
 package com.example.upcyclick
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.example.upcyclick.database.UpDB
 import com.example.upcyclick.database.entity.Question
@@ -19,6 +20,10 @@ class AppSingleton private constructor(var context: Context) {
 
     var upDB: UpDB? = null
 
+    var updatesList: List<Upgrade> = mutableListOf()
+
+    var upgradeCount: Int = 1
+
     init {
         val pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         count = pref!!.getInt("Count", 0)
@@ -30,8 +35,35 @@ class AppSingleton private constructor(var context: Context) {
                 fillScrollDB()
                 fillQuestionDB()
             }
+
+            updatesList = upDB!!.upgradeDao().getAcquiredUpdates()
+            Log.d("LIST1", updatesList.size.toString())
+
+            if(updatesList.isNotEmpty()){
+
+                var size: Int? = getUpdateList().size
+                upgradeCount = getUpdateList().get(size!!.minus(1)).income
+                Log.d("LIST2", upgradeCount.toString())
+            }
+
             this.cancel()
         }
+    }
+
+    fun updateUpgradeCount() {
+
+        var size: Int? = getUpdateList().size
+        upgradeCount = getUpdateList()[size!!.minus(1)].income
+
+    }
+
+    private fun getUpdateList(): List<Upgrade> {
+        CoroutineScope(Dispatchers.IO).launch {
+            updatesList = upDB!!.upgradeDao().getAcquiredUpdates()
+            Log.d("LIST3", updatesList.size.toString())
+        }
+
+        return updatesList
     }
 
     private fun fillUpgradeDB() {
