@@ -13,13 +13,17 @@ import android.view.LayoutInflater
 import android.view.SurfaceControl
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
+
 import androidx.constraintlayout.motion.widget.MotionScene
+
 import androidx.constraintlayout.widget.ConstraintLayout
 
 import androidx.fragment.app.Fragment
 import com.example.upcyclick.R
 import com.example.upcyclick.ShopFragment
-import com.example.upcyclick.YourManager
+
+import com.example.upcyclick.AppSingleton
+
 
 
 class PageFragment : Fragment() {
@@ -50,9 +54,11 @@ class PageFragment : Fragment() {
 
             val commonScroll = view.findViewById<ConstraintLayout>(R.id.lay_1)
             commonScroll.setOnClickListener{
-                if (YourManager.getInstance(this.requireContext()).count >= commonPrice){
-                    YourManager.getInstance(this.requireContext()).count -= commonPrice
-                    tvCoins2?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+
+                if (AppSingleton.getInstance(this.requireContext()).count >= commonPrice){
+                    AppSingleton.getInstance(this.requireContext()).count -= commonPrice
+                    tvCoins2?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
+
                     qwe.setTransition(R.id.tr1)
                     qwe.transitionToEnd()
                     //добавление данных о покупке рецепта в бд
@@ -61,9 +67,11 @@ class PageFragment : Fragment() {
             }
             val rareScroll = view.findViewById<ConstraintLayout>(R.id.lay_2)
             rareScroll.setOnClickListener{
-                if (YourManager.getInstance(this.requireContext()).count >= rarePrice){
-                    YourManager.getInstance(this.requireContext()).count -= rarePrice
-                    tvCoins2?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+
+                if (AppSingleton.getInstance(this.requireContext()).count >= rarePrice){
+                    AppSingleton.getInstance(this.requireContext()).count -= rarePrice
+                    tvCoins2?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
+
                     qwe.setTransition(R.id.tr2)
                     qwe.transitionToEnd()
                     //добавление данных о покупке рецепта в бд
@@ -72,9 +80,11 @@ class PageFragment : Fragment() {
             }
             val legendaryScroll = view.findViewById<ConstraintLayout>(R.id.lay_3)
             legendaryScroll.setOnClickListener{
-                if (YourManager.getInstance(this.requireContext()).count >= legendaryPrice){
-                    YourManager.getInstance(this.requireContext()).count -= legendaryPrice
-                    tvCoins2?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+
+                if (AppSingleton.getInstance(this.requireContext()).count >= legendaryPrice){
+                    AppSingleton.getInstance(this.requireContext()).count -= legendaryPrice
+                    tvCoins2?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
+
                     qwe.setTransition(R.id.tr3)
                     qwe.transitionToEnd()
                     //добавление данных о покупке рецепта в бд

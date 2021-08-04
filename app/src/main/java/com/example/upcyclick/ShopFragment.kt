@@ -2,6 +2,7 @@ package com.example.upcyclick
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Layout
 import androidx.fragment.app.Fragment
@@ -82,8 +83,9 @@ class ShopFragment : Fragment() {
         })
 
         tvCoins = view.findViewById<TextView>(R.id.coins)
-        println(YourManager.getInstance(this.requireContext()).count)
-        tvCoins?.text = YourManager.getInstance(this.requireContext()).count.toString() + " "
+
+        println(AppSingleton.getInstance(this.requireContext()).count)
+        tvCoins?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
 
         return view
     }
@@ -101,7 +103,9 @@ class ShopFragment : Fragment() {
         val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
         val editor = pref?.edit()
 
-        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
+
+        editor?.putInt("Count",  AppSingleton.getInstance(this.requireContext()).count)
+
 
         editor?.apply()
     }

@@ -1,23 +1,13 @@
 package com.example.upcyclick
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
-import com.example.upcyclick.database.UpDB
-import com.example.upcyclick.database.entity.Scroll
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,5 +26,18 @@ class MainActivity : AppCompatActivity() {
             .toBuilder()
             .setAllCorners(CornerFamily.ROUNDED, radius)
             .build()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        onSave()
+    }
+
+
+    private fun onSave() {
+        val pref = applicationContext?.getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val editor = pref?.edit()
+        editor?.putInt("Count",  AppSingleton.getInstance(applicationContext).count)
+        editor?.apply()
     }
 }

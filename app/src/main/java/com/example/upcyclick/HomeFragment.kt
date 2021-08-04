@@ -1,6 +1,5 @@
 package com.example.upcyclick
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
+import com.example.upcyclick.quiz.QuizFragmentDirections
 
 
 class HomeFragment : Fragment() {
@@ -28,15 +29,15 @@ class HomeFragment : Fragment() {
         coinCountTextView = view.findViewById(R.id.coin_count)
         toQuizButton = view.findViewById(R.id.to_shop_button)
 
-        coinCountTextView.text = YourManager.getInstance(this.requireContext()).count.toString()
+        coinCountTextView.text = AppSingleton.getInstance(this.requireContext()).count.toString()
 
         upButton.setOnClickListener {
-            YourManager.getInstance(this.requireContext()).count++
-            coinCountTextView.text = YourManager.getInstance(this.requireContext()).count.toString()
+            AppSingleton.getInstance(this.requireContext()).count++
+            coinCountTextView.text = AppSingleton.getInstance(this.requireContext()).count.toString()
         }
 
         toQuizButton.setOnClickListener {
-
+            view.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToQuizFragment())
         }
 
 //        lifecycleScope.launch{
@@ -44,23 +45,24 @@ class HomeFragment : Fragment() {
 //        }
 
 
+
         return view
     }
 
-    override fun onStop() {
-        super.onStop()
-        onSave()
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        //onSave()
+//    }
 
 
-    private fun onSave() {
-        val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
-        val editor = pref?.edit()
-
-        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
-
-        editor?.apply()
-    }
+//    private fun onSave() {
+//        val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
+//        val editor = pref?.edit()
+//
+//        editor?.putInt("Count",  YourManager.getInstance(this.requireContext()).count)
+//
+//        editor?.apply()
+//    }
 
 
 //    private suspend fun updateCounter(){

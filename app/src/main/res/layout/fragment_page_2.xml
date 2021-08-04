@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout2"
@@ -16,7 +17,7 @@
             android:id="@+id/text_question"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto"
             android:text="Didn't have enough coins?"
             android:textSize="21sp"
@@ -45,7 +46,7 @@
             android:id="@+id/button_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/button_selector"
             android:clickable="true"
             android:fontFamily="@font/roboto"
@@ -55,7 +56,6 @@
             android:textAllCaps="false"
             android:textSize="37sp"
             app:layout_constraintEnd_toEndOf="@+id/button_get_coins"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/button_get_coins"
             app:layout_constraintTop_toBottomOf="@+id/button_get_coins" />
 
@@ -85,6 +85,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/common_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="-100 "
+                android:textAlignment="center"
+                android:textColor="@color/primaryColor"
+                app:drawableRightCompat="@drawable/ic_small_up_coin"
+                android:textSize="40sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/lay_1"
+                app:layout_constraintEnd_toEndOf="@+id/lay_1"
+                app:layout_constraintStart_toStartOf="@id/lay_1"
+                app:layout_constraintTop_toTopOf="@id/lay_1" />
+
+            <TextView
+                android:id="@+id/rare_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="-1000 "
+                android:textAlignment="center"
+                android:textColor="@color/primaryColor"
+                app:drawableRightCompat="@drawable/ic_small_up_coin"
+                android:textSize="40sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/lay_2"
+                app:layout_constraintEnd_toEndOf="@+id/lay_2"
+                app:layout_constraintStart_toStartOf="@id/lay_2"
+                app:layout_constraintTop_toTopOf="@id/lay_2" />
+
+            <TextView
+                android:id="@+id/legendary_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="-10000 "
+                android:textAlignment="center"
+                android:textColor="@color/primaryColor"
+                app:drawableRightCompat="@drawable/ic_small_up_coin"
+                android:textSize="40sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/lay_3"
+                app:layout_constraintEnd_toEndOf="@+id/lay_3"
+                app:layout_constraintStart_toStartOf="@id/lay_3"
+                app:layout_constraintTop_toTopOf="@id/lay_3" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/lay_3"
                 android:layout_width="match_parent"
@@ -98,7 +146,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lay_2">
 
                 <ImageView
-                    android:id="@+id/plusShop"
+                    android:id="@+id/imageView__1"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="16dp"
@@ -110,13 +158,13 @@
                     app:srcCompat="@drawable/ic_rectangle_background" />
 
                 <ImageView
-                    android:id="@+id/imageView_scrol_2"
+                    android:id="@+id/imageView__2"
                     android:layout_width="37dp"
                     android:layout_height="37dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/plusShop"
-                    app:layout_constraintEnd_toEndOf="@+id/plusShop"
-                    app:layout_constraintStart_toStartOf="@+id/plusShop"
-                    app:layout_constraintTop_toTopOf="@+id/plusShop"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView__1"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView__1"
+                    app:layout_constraintStart_toStartOf="@+id/imageView__1"
+                    app:layout_constraintTop_toTopOf="@+id/imageView__1"
                     app:srcCompat="@drawable/ic_legendary_scroll" />
 
                 <TextView
@@ -129,8 +177,8 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/plusShop"
-                    app:layout_constraintTop_toTopOf="@+id/plusShop" />
+                    app:layout_constraintStart_toEndOf="@+id/imageView__1"
+                    app:layout_constraintTop_toTopOf="@+id/imageView__1" />
 
                 <TextView
                     android:id="@+id/descr_legend"
