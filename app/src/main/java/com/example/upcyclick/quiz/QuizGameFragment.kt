@@ -16,7 +16,9 @@ import androidx.navigation.findNavController
 import com.example.upcyclick.AppSingleton
 import com.example.upcyclick.R
 import com.example.upcyclick.database.entity.Question
+
 import kotlinx.coroutines.Dispatchers
+
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -53,7 +55,9 @@ class QuizGameFragment : Fragment() {
 
     private var difficult: Int = 0
 
+
     private lateinit var appInstance: AppSingleton
+
     private lateinit var coinCount: TextView
     private lateinit var coroutine: Job
 
@@ -95,8 +99,10 @@ class QuizGameFragment : Fragment() {
             }
         }
 
+
         lifecycleScope.launch {
             job.join()
+
 
             Log.d("testing", "= " + questions.toString())
 
@@ -325,6 +331,18 @@ class QuizGameFragment : Fragment() {
         drawQuestion()
         drawAnswers()
         drawImage()
+    }
+
+    private suspend fun updateCoinCount() {
+        lifecycleScope.launch {
+            coinCount.text = appInstance.count.toString()
+            delay(1000)
+        }
+    }
+
+    override fun onStop() {
+        coroutine.cancel()
+        super.onStop()
     }
 
     private suspend fun updateCoinCount() {

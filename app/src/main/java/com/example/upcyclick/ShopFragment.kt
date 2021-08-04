@@ -83,6 +83,7 @@ class ShopFragment : Fragment() {
         })
 
         tvCoins = view.findViewById<TextView>(R.id.coins)
+
         println(AppSingleton.getInstance(this.requireContext()).count)
         tvCoins?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
 
@@ -102,7 +103,9 @@ class ShopFragment : Fragment() {
         val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)
         val editor = pref?.edit()
 
+
         editor?.putInt("Count",  AppSingleton.getInstance(this.requireContext()).count)
+
 
         editor?.apply()
     }

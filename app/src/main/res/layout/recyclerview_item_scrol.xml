@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/lay_3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/button_selector"
+    android:clickable="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/scrolView__1"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_rectangle_background" />
+
+    <ImageView
+        android:id="@+id/imageView_scrol_2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrolView__1"
+        app:layout_constraintEnd_toEndOf="@+id/scrolView__1"
+        app:layout_constraintStart_toStartOf="@+id/scrolView__1"
+        app:layout_constraintTop_toTopOf="@+id/scrolView__1"
+        app:srcCompat="@drawable/ic_legendary_scroll" />
+
+    <TextView
+        android:id="@+id/rare_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Legendary scroll"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/scrolView__1"
+        app:layout_constraintTop_toTopOf="@+id/scrolView__1" />
+
+    <TextView
+        android:id="@+id/descr_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:lines="2"
+        android:text="Special skills and resources\nare required"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/rare_legend"
+        app:layout_constraintTop_toBottomOf="@+id/rare_legend" />
+</androidx.constraintlayout.widget.ConstraintLayout>
