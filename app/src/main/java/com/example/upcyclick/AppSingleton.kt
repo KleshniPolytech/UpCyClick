@@ -43,7 +43,11 @@ class AppSingleton private constructor(var context: Context) {
             upDB = Room.databaseBuilder(context, UpDB::class.java, "UpDB").build()
             if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
                 fillUpgradeDB()
+            }
+            if (upDB?.questionDao()?.getAll()?.isEmpty() == true) {
                 fillScrollDB()
+            }
+            if (upDB?.upgradeDao()?.getAll()?.isEmpty() == true) {
                 fillQuestionDB()
             }
             this.cancel()
