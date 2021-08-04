@@ -28,7 +28,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.upcyclick.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
     <fragment
         android:id="@+id/quizGameFragment"
         android:name="com.example.upcyclick.quiz.QuizGameFragment"

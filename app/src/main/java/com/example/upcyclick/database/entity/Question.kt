@@ -14,4 +14,3 @@ data class Question(
 ){
     @PrimaryKey(autoGenerate = true) var _id: Int=0
 }
-

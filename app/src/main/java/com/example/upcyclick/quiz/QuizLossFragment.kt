@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.upcyclick.R
-import com.example.upcyclick.YourManager
+import com.example.upcyclick.AppSingleton
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ class QuizLossFragment : Fragment() {
     private lateinit var retryButton: Button
 
     private lateinit var coinCount: TextView
-    private lateinit var appInstance: YourManager
+    private lateinit var appInstance: AppSingleton
     private lateinit var coroutine: Job
 
 
@@ -43,7 +43,7 @@ class QuizLossFragment : Fragment() {
     private fun init(v: View) {
         retryButton = v.findViewById(R.id.playAgainButton)
         coinCount = v.findViewById(R.id.lossCoinCount)
-        appInstance = YourManager.getInstance(this.requireContext())
+        appInstance = AppSingleton.getInstance(this.requireContext())
     }
 
     private fun initListeners(v: View) {
