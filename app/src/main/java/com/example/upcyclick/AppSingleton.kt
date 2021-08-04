@@ -195,7 +195,7 @@ class AppSingleton private constructor(var context: Context) {
                 "Upcycling is",
                 "turning trash into valuable objects|another name for recycling|turning trash into something less valuable|none of the above",
                 "turning trash into valuable objects",
-                "The main ", //TODO
+                "The main objective of upcycling is to create some more valuable objects than they were before", //TODO
                 12 //TODO
             ),
         )
