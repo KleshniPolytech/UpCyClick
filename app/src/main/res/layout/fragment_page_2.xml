@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lay_2">
 
                 <ImageView
-                    android:id="@+id/imageView__1"
+                    android:id="@+id/plusShop"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="16dp"
@@ -113,10 +113,10 @@
                     android:id="@+id/imageView_scrol_2"
                     android:layout_width="37dp"
                     android:layout_height="37dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView__1"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView__1"
-                    app:layout_constraintStart_toStartOf="@+id/imageView__1"
-                    app:layout_constraintTop_toTopOf="@+id/imageView__1"
+                    app:layout_constraintBottom_toBottomOf="@+id/plusShop"
+                    app:layout_constraintEnd_toEndOf="@+id/plusShop"
+                    app:layout_constraintStart_toStartOf="@+id/plusShop"
+                    app:layout_constraintTop_toTopOf="@+id/plusShop"
                     app:srcCompat="@drawable/ic_legendary_scroll" />
 
                 <TextView
@@ -129,8 +129,8 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/imageView__1"
-                    app:layout_constraintTop_toTopOf="@+id/imageView__1" />
+                    app:layout_constraintStart_toEndOf="@+id/plusShop"
+                    app:layout_constraintTop_toTopOf="@+id/plusShop" />
 
                 <TextView
                     android:id="@+id/descr_legend"

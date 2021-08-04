@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
 
         upButton = view.findViewById(R.id.up_button)
         coinCountTextView = view.findViewById(R.id.coin_count)
-        toQuizButton = view.findViewById(R.id.to_quiz_button)
+        toQuizButton = view.findViewById(R.id.to_shop_button)
 
         coinCountTextView.text = YourManager.getInstance(this.requireContext()).count.toString()
 
