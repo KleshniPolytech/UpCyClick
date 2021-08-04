@@ -57,7 +57,7 @@
             app:srcCompat="@drawable/ic_rectangle_background" />
 
         <ImageView
-            android:id="@+id/imageView__2"
+            android:id="@+id/imageView_scrol_2"
             android:layout_width="37dp"
             android:layout_height="37dp"
             app:layout_constraintBottom_toBottomOf="@+id/scrolView__1"
@@ -90,6 +90,7 @@
             app:layout_constraintStart_toStartOf="@+id/rare_legend"
             app:layout_constraintTop_toBottomOf="@+id/rare_legend" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/imageView__1"
         android:layout_width="200dp"
@@ -133,6 +134,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/recyclerViewScrolls"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourSrollsBoldTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

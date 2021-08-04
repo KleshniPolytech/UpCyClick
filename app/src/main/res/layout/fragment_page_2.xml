@@ -110,7 +110,7 @@
                     app:srcCompat="@drawable/ic_rectangle_background" />
 
                 <ImageView
-                    android:id="@+id/imageView__2"
+                    android:id="@+id/imageView_scrol_2"
                     android:layout_width="37dp"
                     android:layout_height="37dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView__1"
