@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "scrolls")
 data class Scroll(
     @PrimaryKey var name: String,
+    var filePath: String,
     var purchased: Boolean,
     var description: String,
-    var type: String
+    var typeId: Int
 )
