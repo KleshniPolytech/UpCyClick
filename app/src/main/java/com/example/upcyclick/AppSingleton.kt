@@ -24,7 +24,7 @@ class AppSingleton private constructor(var context: Context) {
         R.drawable.q2,
         R.drawable.q3,
         R.drawable.q4,
-        R.drawable.q4,
+        R.drawable.q5,
         R.drawable.q6,
         R.drawable.q7,
         R.drawable.q8,
