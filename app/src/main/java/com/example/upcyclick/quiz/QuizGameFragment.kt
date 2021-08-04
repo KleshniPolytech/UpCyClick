@@ -8,65 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import com.example.upcyclick.R
 import com.example.upcyclick.AppSingleton
+import com.example.upcyclick.R
+import com.example.upcyclick.database.entity.Question
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class QuizGameFragment : Fragment() {
-    data class Q(
-        val dif: Int,
-        val text: String,
-        val answers: List<String>,
-        val right: String,
-        val desc: String)
+    lateinit var questions: MutableList<Question>
 
-    private val easyQuestions: MutableList<Q> = mutableListOf(
-        Q(dif = 1,
-            text = "2 + 2 = ?",
-            answers = listOf("1", "2", "3", "4"),
-            right = "4",
-            desc = "2 + 2 = 4"),
-        Q(dif = 1,
-            text = "2 + 5 = ?",
-            answers = listOf("4", "5", "6", "7"),
-            right = "7",
-            desc = "2 + 2 = 4")
-    )
-
-    private val mediumQuestions: MutableList<Q> = mutableListOf(
-        Q(dif = 2,
-            text = "5 * 3 = ?",
-            answers = listOf("15", "13", "14", "12"),
-            right = "15",
-            desc = "2 + 2 = 4"),
-        Q(dif = 2,
-            text = "7 * 9 = ?",
-            answers = listOf("54", "49", "63", "77"),
-            right = "63",
-            desc = "2 + 2 = 4")
-    )
-
-    private val hardQuestions: MutableList<Q> = mutableListOf(
-        Q(dif = 3,
-            text = "lol?",
-            answers = listOf("lol", "lmao", "rofl", "shrek"),
-            right = "lol",
-            desc = "2 + 2 = 4"),
-        Q(dif = 3,
-            text = "2 - 2 = ?",
-            answers = listOf("0", "1", "2", "3"),
-            right = "0",
-            desc = "2 + 2 = 4")
-    )
-
-    lateinit var questions: MutableList<Q>
-
-    private lateinit var currentQuestion: Q
+    private lateinit var currentQuestion: Question
     private lateinit var answers: MutableList<String>
     private var questionIndex = 0
     private var numQuestions = 0
@@ -101,6 +59,8 @@ class QuizGameFragment : Fragment() {
 
     private var questionResult = false
 
+    private lateinit var questionImage: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -108,20 +68,53 @@ class QuizGameFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_quiz_game, container, false)
 
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appInstance = AppSingleton.getInstance(this.requireContext())
+
+        questions = mutableListOf()
+
+        difficult = appInstance.currentQuizDifficulty
+
         Log.d("testing", difficult.toString())
 
-        init(view)
-        initListeners(view)
-
-        coroutine = lifecycleScope.launch {
-            updateCoinCount()
+        val job = lifecycleScope.launch(Dispatchers.IO) {
+            when (difficult) {
+                1 ->  for (i in appInstance.upDB?.questionDao()?.getAllByDif(1)!!) {
+                    questions.add(i)
+                }
+                2 -> for (i in appInstance.upDB?.questionDao()?.getAllByDif(2)!!) {
+                    questions.add(i)
+                }
+                3 -> for (i in appInstance.upDB?.questionDao()?.getAllByDif(3)!!) {
+                    questions.add(i)
+                }
+            }
         }
 
-        shuffleQuestions()
-        drawQuestion()
-        drawAnswers()
+        lifecycleScope.launch {
+            job.join()
 
-        return view
+            Log.d("testing", "= " + questions.toString())
+
+            Log.d("testing", "dif =" + difficult.toString())
+
+            view?.let { init(it) }
+            view?.let { initListeners(it) }
+
+            shuffleQuestions()
+            drawQuestion()
+            drawAnswers()
+            drawImage()
+        }
+
+        coroutine = lifecycleScope.launch {
+            delay(3000)
+            updateCoinCount()
+        }
     }
 
     private fun init(v: View) {
@@ -152,11 +145,7 @@ class QuizGameFragment : Fragment() {
 
         difficult = appInstance.currentQuizDifficulty
 
-        when(difficult) {
-            1 -> questions = easyQuestions
-            2 -> questions = mediumQuestions
-            3 -> questions = hardQuestions
-        }
+        questionImage = v.findViewById(R.id.questionImage)
 
         numQuestions = questions.size
 
@@ -203,14 +192,15 @@ class QuizGameFragment : Fragment() {
         var index = 0
         for (checkbox in checkBoxes) {
             if (checkbox.isChecked) {
-                if (checkbox.text == currentQuestion.right) {
+                Log.d("testing", currentQuestion.rightAnswer)
+                Log.d("testing", checkbox.text.toString())
+                if (checkbox.text.toString() == currentQuestion.rightAnswer) {
                     questionResult = true
                     showRightAnswer(index)
                     questionIndex++
                     if (questionIndex < numQuestions) {
                         currentQuestion = questions[questionIndex]
                         setQuestion()
-                        for (i in answers) Log.d("testing", i)
                     }
                 }
                 else {
@@ -233,7 +223,7 @@ class QuizGameFragment : Fragment() {
                                 this.context?.let { ContextCompat.getDrawable(it, R.drawable.wrong_quiz_button_selector) }
                         }
                     }
-                    showRightAnswer(currentQuestion.answers.indexOf(currentQuestion.right))
+                    showRightAnswer(answers.indexOf(currentQuestion.rightAnswer))
                 }
                 firstAnswer.isEnabled = false
                 secondAnswer.isEnabled = false
@@ -257,10 +247,10 @@ class QuizGameFragment : Fragment() {
     }
 
     private fun setQuestion() {
-        Log.d("testing", "here")
         currentQuestion = questions[questionIndex]
-        answers = currentQuestion.answers.toMutableList()
+        answers = currentQuestion.answers.split("|").toMutableList()
         answers.shuffle()
+        Log.d("testing", currentQuestion.toString())
     }
 
     private fun showRightAnswer(position: Int) {
@@ -285,15 +275,22 @@ class QuizGameFragment : Fragment() {
     }
 
     private fun drawQuestion() {
-        question.text = currentQuestion.text
+        question.text = currentQuestion.question
     }
 
     private fun drawAnswers() {
-        Log.d("testing", "drawAnswers")
+        if (answers.size == 2) {
+            thirdAnswer.visibility = View.GONE
+            fourthAnswer.visibility = View.GONE
+        }
+        else {
+            thirdAnswer.visibility = View.VISIBLE
+            fourthAnswer.visibility = View.VISIBLE
+            checkBox3.text = answers[2]
+            checkBox4.text = answers[3]
+        }
         checkBox1.text = answers[0]
         checkBox2.text = answers[1]
-        checkBox3.text = answers[2]
-        checkBox4.text = answers[3]
     }
 
     private fun drawDescription() {
@@ -306,7 +303,11 @@ class QuizGameFragment : Fragment() {
             descCorrectness.setTextColor(Color.parseColor("#D56225"))
         }
 
-        descText.text = currentQuestion.desc
+        descText.text = currentQuestion.description
+    }
+
+    private fun drawImage() {
+        questionImage.background = this.context?.let { ContextCompat.getDrawable(it, appInstance.drawableIndexes[currentQuestion.imageId]) }
     }
 
     private fun refreshAnswers() {
@@ -323,6 +324,7 @@ class QuizGameFragment : Fragment() {
         for (checkbox in checkBoxes) checkbox.isChecked = false
         drawQuestion()
         drawAnswers()
+        drawImage()
     }
 
     private suspend fun updateCoinCount() {
