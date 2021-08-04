@@ -24,10 +24,12 @@ class YourManager private constructor(var context: Context) {
 
         CoroutineScope(Dispatchers.IO).launch {
             upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
-            //        if (DB.scrollDao().getAll().isEmpty()) {
-            fillScrollDB()
-            fillQuestionDB()
-            //}
+            println(upDB == null)
+            if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
+                println("mustafa")
+                fillScrollDB()
+                fillQuestionDB()
+            }
             this.cancel()
         }
     }
