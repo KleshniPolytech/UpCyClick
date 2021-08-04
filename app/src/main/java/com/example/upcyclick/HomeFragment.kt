@@ -1,6 +1,7 @@
 package com.example.upcyclick
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
-import com.example.upcyclick.quiz.QuizFragmentDirections
 
 
 class HomeFragment : Fragment() {
@@ -18,10 +18,13 @@ class HomeFragment : Fragment() {
     private lateinit var toQuizButton: Button
     private lateinit var coinCountTextView: TextView
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
@@ -31,8 +34,10 @@ class HomeFragment : Fragment() {
 
         coinCountTextView.text = AppSingleton.getInstance(this.requireContext()).count.toString()
 
+
         upButton.setOnClickListener {
-            AppSingleton.getInstance(this.requireContext()).count++
+            (AppSingleton.getInstance(this.requireContext()).count) += AppSingleton.getInstance(requireContext()).upgradeCount
+            //Log.d("LIST" , AppSingleton.getInstance(requireContext()).upgradeCount.toString())
             coinCountTextView.text = AppSingleton.getInstance(this.requireContext()).count.toString()
         }
 
@@ -49,10 +54,20 @@ class HomeFragment : Fragment() {
         return view
     }
 
-//    override fun onStop() {
-//        super.onStop()
-//        //onSave()
-//    }
+    override fun onResume() {
+
+        super.onResume()
+        Log.d("LIST5" , "A")
+        if(AppSingleton.getInstance(requireContext()).updatesList.isNotEmpty()) {
+            Log.d("LIST5" , "B")
+            AppSingleton.getInstance(requireContext()).updateUpgradeCount()
+        }
+
+    }
+
+
+
+
 
 
 //    private fun onSave() {

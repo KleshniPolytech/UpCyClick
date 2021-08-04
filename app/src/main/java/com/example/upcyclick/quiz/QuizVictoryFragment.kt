@@ -1,7 +1,6 @@
 package com.example.upcyclick.quiz
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.upcyclick.R
-import kotlinx.coroutines.AbstractCoroutine
 import com.example.upcyclick.AppSingleton
-
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -22,10 +19,6 @@ class QuizVictoryFragment : Fragment() {
     private lateinit var wonCoins: TextView
     private lateinit var retryButton: Button
     private lateinit var appInstance: AppSingleton
-
-    private lateinit var coinCount: TextView
-
-    private lateinit var coroutine: Job
 
     private lateinit var coinCount: TextView
 
@@ -51,9 +44,7 @@ class QuizVictoryFragment : Fragment() {
     private fun init(v: View) {
         wonCoins = v.findViewById(R.id.wonCoins)
         retryButton = v.findViewById(R.id.playAgainButton)
-
         appInstance = AppSingleton.getInstance(this.requireContext())
-
         coinCount = v.findViewById(R.id.victoryCoinCount)
 
         when(appInstance.currentQuizDifficulty) {

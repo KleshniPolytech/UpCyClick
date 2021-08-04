@@ -1,6 +1,7 @@
 package com.example.upcyclick
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.example.upcyclick.database.UpDB
 import com.example.upcyclick.database.entity.Question
@@ -16,6 +17,9 @@ class AppSingleton private constructor(var context: Context) {
 
     var upDB: UpDB? = null
 
+    var updatesList: List<Upgrade> = mutableListOf()
+
+    var upgradeCount: Int = 1
 
     var availableCommonScrollList: MutableList<Scroll>? = null
     var boughtCommonScrollList: MutableList<Scroll>? = null
@@ -38,7 +42,6 @@ class AppSingleton private constructor(var context: Context) {
         R.drawable.q13
     )
 
-
     init {
         val pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         count = pref!!.getInt("Count", 0)
@@ -47,7 +50,10 @@ class AppSingleton private constructor(var context: Context) {
             upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
             if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
                 fillUpgradeDB()
+                fillScrollDB()
+                fillQuestionDB()
             }
+
             if (upDB?.questionDao()?.getAll()?.isEmpty() == true) {
                 fillScrollDB()
             }
@@ -60,9 +66,35 @@ class AppSingleton private constructor(var context: Context) {
             availableUpgradeList = upDB?.upgradeDao()?.getAvailable()
             boughtUpgradeList = upDB?.upgradeDao()?.getBought()
 
+
+            updatesList = upDB!!.upgradeDao().getAcquiredUpdates()
+            Log.d("LIST1", updatesList.size.toString())
+
+            if(updatesList.isNotEmpty()){
+
+                var size: Int? = getUpdateList().size
+                upgradeCount = getUpdateList().get(size!!.minus(1)).income
+                Log.d("LIST2", upgradeCount.toString())
+            }
+
             this.cancel()
         }
+    }
 
+    fun updateUpgradeCount() {
+
+        var size: Int? = getUpdateList().size
+        upgradeCount = getUpdateList()[size!!.minus(1)].income
+
+    }
+
+    private fun getUpdateList(): List<Upgrade> {
+        CoroutineScope(Dispatchers.IO).launch {
+            updatesList = upDB!!.upgradeDao().getAcquiredUpdates()
+            Log.d("LIST3", updatesList.size.toString())
+        }
+
+        return updatesList
     }
 
     private fun fillUpgradeDB() {
@@ -91,7 +123,9 @@ class AppSingleton private constructor(var context: Context) {
                 5
 
             ),
-        )
+
+
+            )
     }
 
     private fun fillQuestionDB() {
@@ -194,15 +228,15 @@ class AppSingleton private constructor(var context: Context) {
                 11
             ),
             Question(
-                2,
+                1,
                 "As an individual, I can do my part to help reduce food waste by (select the ONE best answer):",
-                "Learning more about upcycled foods|Supporting brands that use upcycled ingredients|Planning my meals so I know how much I need at the store|All of the above",
+                "Learning more about upcycled foods|Supporting brands that use upcycled ingredients|Planning my meals so I know how much I need at the store|Using a tool like a Foodprint Calculator to understand the impact of my food choices",
                 "All of the above",
                 "Fight climate change with diet change! Your food choices make an impact on our global environment. There is not one perfect diet for everyone, but we can all do our part to make the relationship with food we eat more sustainable!",
                 12
             ),
             Question(
-                3,
+                1,
                 "Upcycling is",
                 "turning trash into valuable objects|another name for recycling|turning trash into something less valuable|none of the above",
                 "turning trash into valuable objects",
@@ -210,6 +244,7 @@ class AppSingleton private constructor(var context: Context) {
                 12 //TODO
             ),
         )
+
     }
 
     private fun fillScrollDB() {
@@ -298,6 +333,7 @@ class AppSingleton private constructor(var context: Context) {
                 "Create a funky, upcycled wallet to show off to your friends",
                 1,
             )
+
         )
     }
 

@@ -21,6 +21,9 @@ public interface ScrollDao {
     @Query("DELETE FROM scrolls")
     fun deleteAll()
 
+    @Query("SELECT * FROM scrolls WHERE purchased=1")
+    fun getAllPurchasedScrolls(): List<Scroll>
+
     @Query("SELECT * FROM scrolls WHERE purchased = 0 and typeId = :rarity")
     fun getAvailable(rarity: Int): MutableList<Scroll>
 
