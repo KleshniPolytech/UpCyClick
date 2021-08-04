@@ -20,4 +20,14 @@ public interface ScrollDao {
 
     @Query("DELETE FROM scrolls")
     fun deleteAll()
+
+    @Query("SELECT * FROM scrolls WHERE purchased = 0 and typeId = :rarity")
+    fun getAvailable(rarity: Int): MutableList<Scroll>
+
+    @Query("SELECT * FROM scrolls WHERE purchased = 1 and typeId = :rarity")
+    fun getBought(rarity: Int): MutableList<Scroll>
+
+    @Query("UPDATE scrolls SET purchased = 1 WHERE name = :name")
+    fun buyScroll(name: String): Unit
+
 }
