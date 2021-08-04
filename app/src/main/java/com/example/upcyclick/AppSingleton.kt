@@ -5,12 +5,13 @@ import androidx.room.Room
 import com.example.upcyclick.database.UpDB
 import com.example.upcyclick.database.entity.Question
 import com.example.upcyclick.database.entity.Scroll
+import com.example.upcyclick.database.entity.Upgrade
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class YourManager private constructor(var context: Context) {
+class AppSingleton private constructor(var context: Context) {
 
     var count: Int = 0
 
@@ -23,13 +24,45 @@ class YourManager private constructor(var context: Context) {
         count = pref!!.getInt("Count", 0)
 
         CoroutineScope(Dispatchers.IO).launch {
-            upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
-            //        if (DB.scrollDao().getAll().isEmpty()) {
-            fillScrollDB()
-            fillQuestionDB()
-            //}
+            upDB = Room.databaseBuilder(context, UpDB::class.java, "UpDB").build()
+            if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
+                fillUpgradeDB()
+                fillScrollDB()
+                fillQuestionDB()
+            }
             this.cancel()
         }
+    }
+
+    private fun fillUpgradeDB() {
+        upDB?.upgradeDao()?.insert(
+            Upgrade(
+                "UpCy Double Click",
+                false,
+                2
+
+            ),
+            Upgrade(
+                "UpCy Triple Click",
+                false,
+                3
+
+            ),
+            Upgrade(
+                "UpCy Quadr Click",
+                false,
+                4
+
+            ),
+            Upgrade(
+                "UpCy Mega Click",
+                false,
+                5
+
+            ),
+
+
+            )
     }
 
     private fun fillQuestionDB() {
@@ -250,5 +283,5 @@ class YourManager private constructor(var context: Context) {
         )
     }
 
-    companion object : SingletonHolder<YourManager, Context>(::YourManager)
+    companion object : SingletonHolder<AppSingleton, Context>(::AppSingleton)
 }
