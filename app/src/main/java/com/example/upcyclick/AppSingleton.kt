@@ -15,6 +15,10 @@ class AppSingleton private constructor(var context: Context) {
 
     var currentQuizDifficulty: Int = 0
 
+    var commonScrollIncome = 1
+    var rareScrollIncome = 5
+    var legendaryScrollIncome = 30
+
     var upDB: UpDB? = null
 
     var updatesList: List<Upgrade> = mutableListOf()
@@ -23,6 +27,11 @@ class AppSingleton private constructor(var context: Context) {
 
     var availableCommonScrollList: MutableList<Scroll>? = null
     var boughtCommonScrollList: MutableList<Scroll>? = null
+    var availableRareScrollList: MutableList<Scroll>? = null
+    var boughtRareScrollList: MutableList<Scroll>? = null
+    var availableLegendaryScrollList: MutableList<Scroll>? = null
+    var boughtLegendaryScrollList: MutableList<Scroll>? = null
+
     var availableUpgradeList: MutableList<Upgrade>? = null
     var boughtUpgradeList: MutableList<Upgrade>? = null
 
@@ -53,18 +62,25 @@ class AppSingleton private constructor(var context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
             if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
-                fillUpgradeDB()
+                fillScrollDB()
             }
 
             if (upDB?.questionDao()?.getAll()?.isEmpty() == true) {
-                fillScrollDB()
+                fillQuestionDB()
             }
             if (upDB?.upgradeDao()?.getAll()?.isEmpty() == true) {
-                fillQuestionDB()
+                fillUpgradeDB()
             }
 
             availableCommonScrollList = upDB?.scrollDao()?.getAvailable(1)
             boughtCommonScrollList = upDB?.scrollDao()?.getBought(1)
+
+            availableRareScrollList = upDB?.scrollDao()?.getAvailable(2)
+            boughtRareScrollList = upDB?.scrollDao()?.getBought(2)
+
+            availableLegendaryScrollList = upDB?.scrollDao()?.getAvailable(3)
+            boughtLegendaryScrollList = upDB?.scrollDao()?.getBought(3)
+
             availableUpgradeList = upDB?.upgradeDao()?.getAvailable()
             boughtUpgradeList = upDB?.upgradeDao()?.getBought()
 
@@ -74,8 +90,8 @@ class AppSingleton private constructor(var context: Context) {
 
             if(updatesList.isNotEmpty()){
 
-                var size: Int? = getUpdateList().size
-                upgradeCount = getUpdateList().get(size!!.minus(1)).income
+                var size: Int? = updatesList.size
+                upgradeCount = updatesList.get(size!!.minus(1)).income
                 Log.d("LIST2", upgradeCount.toString())
             }
 
@@ -85,8 +101,8 @@ class AppSingleton private constructor(var context: Context) {
 
     fun updateUpgradeCount() {
 
-        var size: Int? = getUpdateList().size
-        upgradeCount = getUpdateList()[size!!.minus(1)].income
+        var size: Int? = updatesList.size
+        upgradeCount = updatesList[size!!.minus(1)].income
 
     }
 
@@ -109,14 +125,6 @@ class AppSingleton private constructor(var context: Context) {
 
     }
 
-    val a: String? = "Hello!"
-
-    val b: String? = null
-
-    val c: String  = "World"
-
-    val e = b + c
-
 
 
     private fun fillUpgradeDB() {
@@ -134,7 +142,7 @@ class AppSingleton private constructor(var context: Context) {
 
             ),
             Upgrade(
-                "UpCy Quadr Click",
+                "UpCy Quadruple Click",
                 false,
                 4
 

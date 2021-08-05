@@ -1,10 +1,8 @@
-package com.example.upcyclick
+package com.example.upcyclick.shop
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +11,11 @@ import android.widget.TextView
 
 import com.google.android.material.tabs.TabLayout
 
-import com.example.upcyclick.pager.SampleFragmentPagerAdapter
+import com.example.upcyclick.shop.pager.SampleFragmentPagerAdapter
 
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.example.upcyclick.pager.PageFragment
+import com.example.upcyclick.AppSingleton
+import com.example.upcyclick.R
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -26,12 +24,18 @@ class ShopFragment : Fragment() {
 
     var tvCoins: TextView? = null
 
+    lateinit var singleton: AppSingleton
+
     @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_shop, container, false)
+
+        singleton = AppSingleton.getInstance(this.requireContext())
+        //делаем много коинов, потому что мне впадлу их фармить
+        singleton.count = 1000000
 
         // Получаем ViewPager и устанавливаем в него адаптер
         val viewPager: ViewPager2 = view.findViewById(R.id.viewpager)
@@ -85,7 +89,7 @@ class ShopFragment : Fragment() {
         tvCoins = view.findViewById<TextView>(R.id.coins)
 
         println(AppSingleton.getInstance(this.requireContext()).count)
-        tvCoins?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
+        tvCoins?.text = singleton.count.toString() + " "
 
         return view
     }
