@@ -14,6 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.R
 import com.example.upcyclick.AppSingleton
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +52,9 @@ class PageFragment : Fragment() {
         singleton = AppSingleton.getInstance(this.requireContext())
 
         if (mPage == 1){
-
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_upgrades)
+            recyclerView.layoutManager = LinearLayoutManager(this.context)
+            recyclerView.adapter = UpgradeAdapter(singleton.availableUpgradeList!!)
         }
         else{
             val commonScroll = view.findViewById<ConstraintLayout>(R.id.lay_1)
@@ -72,6 +76,19 @@ class PageFragment : Fragment() {
                     commonScroll.isClickable = true
                     rareScroll.isClickable = true
                     legendaryScroll.isClickable = true
+
+                    if (singleton.availableCommonScrollList?.count()?:0 == 0){
+                        allCommonBought(commonScroll)
+                    }
+
+                    if (singleton.availableRareScrollList?.count()?:0 == 0){
+                        allRareBought(rareScroll)
+                    }
+
+                    if (singleton.availableLegendaryScrollList?.count()?:0 == 0){
+                        allLegendaryBought(legendaryScroll)
+                    }
+
                 }
 
                 override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
@@ -104,11 +121,6 @@ class PageFragment : Fragment() {
                         //проигрывание анимаций
                         qwe.setTransition(R.id.tr1)
                         qwe.transitionToEnd()
-
-
-                        if (singleton.availableCommonScrollList?.count()?:0 == 0){
-                            allCommonBought(commonScroll)
-                        }
 
                     }
                 }
@@ -143,10 +155,6 @@ class PageFragment : Fragment() {
                         commonScroll.isClickable = false
                         legendaryScroll.isClickable = false
 
-                        if (singleton.availableRareScrollList?.count()?:0 == 0){
-                            allRareBought(rareScroll)
-                        }
-
                     }
                 }
             else{
@@ -179,10 +187,6 @@ class PageFragment : Fragment() {
                         qwe.transitionToEnd()
                         rareScroll.isClickable = false
                         commonScroll.isClickable = false
-
-                        if (singleton.availableLegendaryScrollList?.count()?:0 == 0){
-                            allLegendaryBought(legendaryScroll)
-                        }
 
                     }
                 }
