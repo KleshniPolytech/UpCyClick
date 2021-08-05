@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import com.example.upcyclick.database.entity.Scroll
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -16,7 +19,14 @@ class HomeFragment : Fragment() {
 
     private lateinit var upButton: Button
     private lateinit var toQuizButton: Button
+    private lateinit var commonCountButton: Button
+    private lateinit var rareCountButton: Button
+    private lateinit var legCountButton: Button
     private lateinit var coinCountTextView: TextView
+
+    var commonBoughtScrollList: MutableList<Scroll>? = null
+    var rareBoughtScrollList: MutableList<Scroll>? = null
+    var legBoughtScrollList: MutableList<Scroll>? = null
 
 
 
@@ -31,8 +41,25 @@ class HomeFragment : Fragment() {
         upButton = view.findViewById(R.id.up_button)
         coinCountTextView = view.findViewById(R.id.coin_count)
         toQuizButton = view.findViewById(R.id.to_shop_button)
+        commonCountButton = view.findViewById(R.id.common_count)
+        rareCountButton = view.findViewById(R.id.rare_count)
+        legCountButton = view.findViewById(R.id.legendary_count)
+
 
         coinCountTextView.text = AppSingleton.getInstance(this.requireContext()).count.toString()
+
+        commonBoughtScrollList = AppSingleton.getInstance(requireContext()).getBoughtScrollList(1)
+        Log.d("AAA1",  commonBoughtScrollList?.size.toString())
+        rareBoughtScrollList = AppSingleton.getInstance(requireContext()).getBoughtScrollList(2)
+        Log.d("AAA2",  rareBoughtScrollList?.size.toString())
+        legBoughtScrollList = AppSingleton.getInstance(requireContext()).getBoughtScrollList(3)
+        Log.d("AAA3",  legBoughtScrollList?.size.toString())
+
+
+
+        commonCountButton.text = commonBoughtScrollList?.size.toString()
+
+
 
 
         upButton.setOnClickListener {

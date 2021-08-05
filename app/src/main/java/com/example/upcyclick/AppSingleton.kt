@@ -42,6 +42,10 @@ class AppSingleton private constructor(var context: Context) {
         R.drawable.q13
     )
 
+    var commonBoughtScrollList: MutableList<Scroll>? = null
+    var rareBoughtScrollList: MutableList<Scroll>? = null
+    var legBoughtScrollList: MutableList<Scroll>? = null
+
     init {
         val pref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         count = pref!!.getInt("Count", 0)
@@ -50,8 +54,6 @@ class AppSingleton private constructor(var context: Context) {
             upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
             if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
                 fillUpgradeDB()
-                fillScrollDB()
-                fillQuestionDB()
             }
 
             if (upDB?.questionDao()?.getAll()?.isEmpty() == true) {
@@ -96,6 +98,26 @@ class AppSingleton private constructor(var context: Context) {
 
         return updatesList
     }
+
+    fun getBoughtScrollList(typeId:Int): MutableList<Scroll>?{
+        //var list: MutableList<Scroll>? = mutableListOf()
+
+        //list = upDB?.scrollDao()?.getBought(typeId)
+//        Log.d("AAA", list?.size.toString())
+
+        return upDB?.scrollDao()?.getBought(typeId)
+
+    }
+
+    val a: String? = "Hello!"
+
+    val b: String? = null
+
+    val c: String  = "World"
+
+    val e = b + c
+
+
 
     private fun fillUpgradeDB() {
         upDB?.upgradeDao()?.insert(
