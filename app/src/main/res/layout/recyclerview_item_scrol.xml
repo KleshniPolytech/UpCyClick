@@ -13,7 +13,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/scrolView__1"
+        android:id="@+id/upgrade_back"
         android:layout_width="66dp"
         android:layout_height="66dp"
         android:layout_marginStart="16dp"
@@ -28,14 +28,14 @@
         android:id="@+id/imageView_scrol_2"
         android:layout_width="37dp"
         android:layout_height="37dp"
-        app:layout_constraintBottom_toBottomOf="@+id/scrolView__1"
-        app:layout_constraintEnd_toEndOf="@+id/scrolView__1"
-        app:layout_constraintStart_toStartOf="@+id/scrolView__1"
-        app:layout_constraintTop_toTopOf="@+id/scrolView__1"
+        app:layout_constraintBottom_toBottomOf="@+id/upgrade_back"
+        app:layout_constraintEnd_toEndOf="@+id/upgrade_back"
+        app:layout_constraintStart_toStartOf="@+id/upgrade_back"
+        app:layout_constraintTop_toTopOf="@+id/upgrade_back"
         app:srcCompat="@drawable/ic_legendary_scroll" />
 
     <TextView
-        android:id="@+id/rare_legend"
+        android:id="@+id/title_upgrade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -44,8 +44,8 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/scrolView__1"
-        app:layout_constraintTop_toTopOf="@+id/scrolView__1" />
+        app:layout_constraintStart_toEndOf="@+id/upgrade_back"
+        app:layout_constraintTop_toTopOf="@+id/upgrade_back" />
 
     <TextView
         android:id="@+id/descr_legend"
@@ -55,6 +55,6 @@
         android:lines="2"
         android:text="Special skills and resources\nare required"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/rare_legend"
-        app:layout_constraintTop_toBottomOf="@+id/rare_legend" />
+        app:layout_constraintStart_toStartOf="@+id/title_upgrade"
+        app:layout_constraintTop_toBottomOf="@+id/title_upgrade" />
 </androidx.constraintlayout.widget.ConstraintLayout>
