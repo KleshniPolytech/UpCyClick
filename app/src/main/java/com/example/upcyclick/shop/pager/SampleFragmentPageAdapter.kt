@@ -1,8 +1,8 @@
-package com.example.upcyclick.pager
+package com.example.upcyclick.shop.pager
 
 import androidx.fragment.app.*
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.upcyclick.ShopFragment
+import com.example.upcyclick.shop.ShopFragment
 
 class SampleFragmentPagerAdapter(fa: ShopFragment) : FragmentStateAdapter(fa) {
     val PAGE_COUNT = 2

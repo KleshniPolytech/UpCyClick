@@ -16,7 +16,7 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>) :
         var descriptionTextView: TextView? = null
         var imageView: ImageView? = null
         init {
-            nameTextView = itemView.findViewById(R.id.rare_legend)
+            nameTextView = itemView.findViewById(R.id.title_upgrade)
             descriptionTextView = itemView.findViewById(R.id.descr_legend)
             imageView = itemView.findViewById(R.id.imageView_scrol_2)
         }

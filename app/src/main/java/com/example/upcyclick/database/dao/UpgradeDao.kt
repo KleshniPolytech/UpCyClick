@@ -22,13 +22,13 @@ public interface UpgradeDao {
     @Query("DELETE FROM upgrades")
     fun deleteAll()
 
-    @Query("SELECT * FROM upgrades WHERE purchased=1")
+    @Query("SELECT * FROM upgrades WHERE purchased=1 ORDER BY income")
     fun getAcquiredUpdates(): List<Upgrade>
 
-    @Query("SELECT * FROM upgrades WHERE purchased = 0")
+    @Query("SELECT * FROM upgrades WHERE purchased = 0 ORDER BY income")
     fun getAvailable(): MutableList<Upgrade>
 
-    @Query("SELECT * FROM upgrades WHERE purchased = 1")
+    @Query("SELECT * FROM upgrades WHERE purchased = 1 ORDER BY income")
     fun getBought(): MutableList<Upgrade>
 
 }

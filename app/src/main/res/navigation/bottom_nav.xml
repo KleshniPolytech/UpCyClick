@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_scroll" />
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.example.upcyclick.ShopFragment"
+        android:name="com.example.upcyclick.shop.ShopFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" />
     <fragment
