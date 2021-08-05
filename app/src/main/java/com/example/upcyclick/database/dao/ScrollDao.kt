@@ -1,5 +1,6 @@
 package com.example.upcyclick.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.upcyclick.database.entity.Scroll
 
@@ -32,5 +33,6 @@ public interface ScrollDao {
 
     @Query("UPDATE scrolls SET purchased = 1 WHERE name = :name")
     fun buyScroll(name: String): Unit
+
 
 }
