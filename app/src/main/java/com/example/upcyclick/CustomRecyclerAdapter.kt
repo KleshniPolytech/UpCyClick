@@ -1,12 +1,14 @@
 package com.example.upcyclick
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
 import com.github.barteksc.pdfviewer.PDFView
@@ -40,14 +42,13 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>,private val contex
 //        holder.imageView = when(scrolls[position].type){
 //
 //        }
-        val pdf = view.findViewById<PDFView>(R.id.pdfView)
+
         holder.itemView.setOnClickListener {
             run {
-                Toast.makeText(context, "a" + holder.descriptionTextView?.text, Toast.LENGTH_SHORT)
-                    .show()
-
+                val bundle = Bundle()
                 //todo передавать имя файла из скролла
-                pdf?.fromAsset("Cosmetic_Tube_Earrings_Instructions(Rare).pdf")?.load()
+                bundle.putString("pdfName","Cosmetic_Tube_Earrings_Instructions(Rare).pdf")
+                view.findNavController().navigate(R.id.action_scrollFragment_to_pdfReaderFragment,bundle)
             }
         }
     }

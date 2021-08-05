@@ -18,9 +18,7 @@
         android:id="@+id/scrollFragment"
         android:name="com.example.upcyclick.ScrollFragment"
         android:label="fragment_scroll"
-        tools:layout="@layout/fragment_scroll"
-
-        >
+        tools:layout="@layout/fragment_scroll">
     <action
         android:id="@+id/action_scrollFragment_to_pdfReaderFragment"
         app:destination="@id/pdfFragment" />
@@ -28,7 +26,7 @@
 
     <fragment
         android:id="@+id/pdfFragment"
-        android:name="com.example.upcyclick.ShopFragment"
+        android:name="com.example.upcyclick.PDFFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_pdf_reader" />
 
