@@ -1,6 +1,7 @@
 package com.example.upcyclick
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,19 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ScrollFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var plusShop: ImageView
     private lateinit var donthave: TextView
     private lateinit var toShop: Button
-
+    private lateinit var list : List<Scroll>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +44,28 @@ class ScrollFragment : Fragment() {
 
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        val list = mutableListOf<Scroll>(
-            Scroll("1", "" , true, "3", 4),
-            Scroll("1", "" , true, "3", 4),
-            Scroll("1", "" , true, "3", 4),
-            Scroll("1", "" , true, "3", 4)
-        )
-        recyclerView.adapter = this.context?.let { CustomRecyclerAdapter(list, it,v) }
-        list.add(Scroll("1", "" , true, "3aa", 4))
 
-        if (list.size != 0) hide()
+
+        var appInstance: AppSingleton = AppSingleton.getInstance(this.requireContext())
+
+
+        val job = lifecycleScope.launch(Dispatchers.IO) {
+            list =  appInstance.upDB?.scrollDao()?.getAll() ?: listOf()
+        }
+        lifecycleScope.launch {
+            job.join()
+            recyclerView.adapter = appInstance.context?.let { CustomRecyclerAdapter(list, it,v) }
+
+        }
+
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (list.size != 0) hide()
+
+    }
     private fun hide() {
         plusShop.visibility = View.INVISIBLE
         donthave.visibility = View.INVISIBLE

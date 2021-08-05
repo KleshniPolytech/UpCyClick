@@ -2,6 +2,7 @@ package com.example.upcyclick
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,16 +39,19 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>,private val contex
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.nameTextView?.text = scrolls[position].name
         holder.descriptionTextView?.text = scrolls[position].description
-        //todo изменять картинку по типу
-//        holder.imageView = when(scrolls[position].type){
-//
-//        }
+        Log.d("typeID ",""+scrolls[position].typeId)
+
+        holder.imageView?.setImageResource(when(scrolls[position].typeId){
+            1->R.drawable.ic_common_scroll//todo чекните id скроллов
+            2->R.drawable.ic_rare_scroll
+            else -> R.drawable.ic_legendary_scroll
+        }
+        )
 
         holder.itemView.setOnClickListener {
             run {
                 val bundle = Bundle()
-                //todo передавать имя файла из скролла
-                bundle.putString("pdfName","Cosmetic_Tube_Earrings_Instructions(Rare).pdf")
+                bundle.putString("pdfName",scrolls[position].filePath)
                 view.findNavController().navigate(R.id.action_scrollFragment_to_pdfReaderFragment,bundle)
             }
         }
