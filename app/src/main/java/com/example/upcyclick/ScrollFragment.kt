@@ -46,7 +46,7 @@ class ScrollFragment : Fragment() {
             Scroll("1", "" , true, "3", 4),
             Scroll("1", "" , true, "3", 4)
         )
-        recyclerView.adapter = CustomRecyclerAdapter(list)
+        recyclerView.adapter = this.context?.let { CustomRecyclerAdapter(list, it,v) }
         list.add(Scroll("1", "" , true, "3aa", 4))
 
         if (list.size != 0) hide()

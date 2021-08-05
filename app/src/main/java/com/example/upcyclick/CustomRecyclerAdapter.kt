@@ -1,14 +1,17 @@
 package com.example.upcyclick
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
+import com.github.barteksc.pdfviewer.PDFView
 
-class CustomRecyclerAdapter(private val scrolls: List<Scroll>) :
+class CustomRecyclerAdapter(private val scrolls: List<Scroll>,private val context: Context,private val view: View) :
     RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,6 +32,7 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>) :
         return MyViewHolder(itemView)
     }
 
+    
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.nameTextView?.text = scrolls[position].name
         holder.descriptionTextView?.text = scrolls[position].description
@@ -36,6 +40,16 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>) :
 //        holder.imageView = when(scrolls[position].type){
 //
 //        }
+        val pdf = view.findViewById<PDFView>(R.id.pdfView)
+        holder.itemView.setOnClickListener {
+            run {
+                Toast.makeText(context, "a" + holder.descriptionTextView?.text, Toast.LENGTH_SHORT)
+                    .show()
+
+                //todo передавать имя файла из скролла
+                pdf?.fromAsset("Cosmetic_Tube_Earrings_Instructions(Rare).pdf")?.load()
+            }
+        }
     }
 
     override fun getItemCount() = scrolls.size
