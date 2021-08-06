@@ -1,6 +1,7 @@
 package com.example.upcyclick.quiz
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,78 +9,68 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.upcyclick.AppSingleton
 import com.example.upcyclick.R
 import com.example.upcyclick.database.entity.Question
+import com.example.upcyclick.databinding.FragmentQuizGameBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class QuizGameFragment : Fragment() {
+    var firstLaunched = true
+
     lateinit var questions: MutableList<Question>
 
-    private lateinit var currentQuestion: Question
-    private lateinit var answers: MutableList<String>
+    var currentQuestion = Question(1, "", "", "", "", 0)
+    var answers: MutableList<String> = mutableListOf()
     private var questionIndex = 0
     private var numQuestions = 0
 
-    private lateinit var firstAnswer: RelativeLayout
-    private lateinit var secondAnswer: RelativeLayout
-    private lateinit var thirdAnswer: RelativeLayout
-    private lateinit var fourthAnswer: RelativeLayout
-
-    private lateinit var progressBar: ProgressBar
-    private lateinit var progressText: TextView
-
     private lateinit var checkBoxes: List<RadioButton>
-    private lateinit var checkBox1: RadioButton
-    private lateinit var checkBox2: RadioButton
-    private lateinit var checkBox3: RadioButton
-    private lateinit var checkBox4: RadioButton
 
-    private lateinit var continueButton: Button
-
-    private lateinit var question: TextView
-
-    private lateinit var description: RelativeLayout
-    private lateinit var descCorrectness: TextView
-    private lateinit var descText: TextView
+    var quizDescriptionText = ""
 
     private var difficult: Int = 0
 
     private lateinit var appInstance: AppSingleton
-    private lateinit var coinCount: TextView
     private lateinit var coroutine: Job
 
     private var questionResult = false
 
-    private lateinit var questionImage: View
+    var imageId: Drawable? = null
+
+    private lateinit var binding: FragmentQuizGameBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val view = inflater.inflate(R.layout.fragment_quiz_game, container, false)
+        binding = DataBindingUtil.inflate<FragmentQuizGameBinding>(inflater, R.layout.fragment_quiz_game, container, false)
 
-        return view
+        onResume()
+        firstLaunched = false
+
+        binding.quiz = this
+
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        if (!firstLaunched) return
+
         appInstance = AppSingleton.getInstance(this.requireContext())
 
         questions = mutableListOf()
 
         difficult = appInstance.currentQuizDifficulty
-
-        Log.d("testing", difficult.toString())
 
         val job = lifecycleScope.launch(Dispatchers.IO) {
             when (difficult) {
@@ -98,64 +89,36 @@ class QuizGameFragment : Fragment() {
         lifecycleScope.launch {
             job.join()
 
-            Log.d("testing", "= " + questions.toString())
-
-            Log.d("testing", "dif =" + difficult.toString())
-
-            view?.let { init(it) }
+            init()
             view?.let { initListeners(it) }
 
             shuffleQuestions()
-            drawQuestion()
-            drawAnswers()
-            drawImage()
+            drawAnswerViews()
+            imageId = context?.let { ContextCompat.getDrawable(it, appInstance.drawableIndexes[currentQuestion.imageId]) }
+
+            showViews()
+
+            binding.invalidateAll()
         }
 
         coroutine = lifecycleScope.launch {
-            delay(3000)
             updateCoinCount()
         }
     }
 
-    private fun init(v: View) {
-        firstAnswer = v.findViewById(R.id.answer1)
-        secondAnswer = v.findViewById(R.id.answer2)
-        thirdAnswer = v.findViewById(R.id.answer3)
-        fourthAnswer = v.findViewById(R.id.answer4)
-
-        progressBar = v.findViewById(R.id.progressBar)
-        progressText = v.findViewById(R.id.progressText)
-
-        checkBox1 = v.findViewById(R.id.checkbox1)
-        checkBox2 = v.findViewById(R.id.checkbox2)
-        checkBox3 = v.findViewById(R.id.checkbox3)
-        checkBox4 = v.findViewById(R.id.checkbox4)
-
-        checkBoxes = listOf(checkBox1, checkBox2, checkBox3, checkBox4)
-
-        continueButton = v.findViewById(R.id.continueButton)
-
-        question = v.findViewById(R.id.question)
-
-        description = v.findViewById(R.id.quizDescription)
-        descCorrectness = v.findViewById(R.id.correctnessQuiz)
-        descText = v.findViewById(R.id.descriptionQuiz)
-
-        appInstance = AppSingleton.getInstance(this.requireContext())
+    private fun init() {
+        checkBoxes = listOf(binding.checkbox1, binding.checkbox2, binding.checkbox3, binding.checkbox4)
 
         difficult = appInstance.currentQuizDifficulty
 
-        questionImage = v.findViewById(R.id.questionImage)
-
         numQuestions = questions.size
-
-        coinCount = v.findViewById(R.id.quizGameCoinCount)
     }
 
     private fun initListeners(v: View) {
-        continueButton.setOnClickListener {
+        binding.continueButton.setOnClickListener {
             if (questionResult) {
                 if (questionIndex < numQuestions) {
+                    currentQuestion = questions[questionIndex]
                     refreshAnswers()
                 }
                 else {
@@ -167,28 +130,28 @@ class QuizGameFragment : Fragment() {
             }
         }
 
-        firstAnswer.setOnClickListener {
-            checkBox1.isChecked = !checkBox1.isChecked
-            onClick(v)
+        binding.answer1.setOnClickListener {
+            binding.checkbox1.isChecked = !binding.checkbox1.isChecked
+            onClick()
         }
 
-        secondAnswer.setOnClickListener {
-            checkBox2.isChecked = !checkBox2.isChecked
-            onClick(v)
+        binding.answer2.setOnClickListener {
+            binding.checkbox2.isChecked = !binding.checkbox2.isChecked
+            onClick()
         }
 
-        thirdAnswer.setOnClickListener {
-            checkBox3.isChecked = !checkBox3.isChecked
-            onClick(v)
+        binding.answer3.setOnClickListener {
+            binding.checkbox3.isChecked = !binding.checkbox3.isChecked
+            onClick()
         }
 
-        fourthAnswer.setOnClickListener {
-            checkBox4.isChecked = !checkBox4.isChecked
-            onClick(v)
+        binding.answer4.setOnClickListener {
+            binding.checkbox4.isChecked = !binding.checkbox4.isChecked
+            onClick()
         }
     }
 
-    private fun onClick(v: View) {
+    private fun onClick() {
         var index = 0
         for (checkbox in checkBoxes) {
             if (checkbox.isChecked) {
@@ -198,42 +161,43 @@ class QuizGameFragment : Fragment() {
                     questionResult = true
                     showRightAnswer(index)
                     questionIndex++
-                    if (questionIndex < numQuestions) {
-                        currentQuestion = questions[questionIndex]
-                        setQuestion()
-                    }
                 }
                 else {
                     questionResult = false
                     when(index) {
                         0 -> {
-                            firstAnswer.background =
+                            binding.answer1.background =
                                 this.context?.let { ContextCompat.getDrawable(it, R.drawable.wrong_quiz_button_selector) }
                         }
                         1 -> {
-                            secondAnswer.background =
+                            binding.answer2.background =
                                 this.context?.let { ContextCompat.getDrawable(it, R.drawable.wrong_quiz_button_selector) }
                         }
                         2 -> {
-                            thirdAnswer.background =
+                            binding.answer3.background =
                                 this.context?.let { ContextCompat.getDrawable(it, R.drawable.wrong_quiz_button_selector) }
                         }
                         3 -> {
-                            fourthAnswer.background =
+                            binding.answer4.background =
                                 this.context?.let { ContextCompat.getDrawable(it, R.drawable.wrong_quiz_button_selector) }
                         }
                     }
                     showRightAnswer(answers.indexOf(currentQuestion.rightAnswer))
                 }
-                firstAnswer.isEnabled = false
-                secondAnswer.isEnabled = false
-                thirdAnswer.isEnabled = false
-                fourthAnswer.isEnabled = false
-                drawDescription()
-                description.visibility = View.VISIBLE
-                continueButton.visibility = View.VISIBLE
-                progressBar.progress = (((questionIndex) / numQuestions.toFloat()) * 100).toInt()
-                progressText.text = "${(((questionIndex) / numQuestions.toFloat()) * 100).toInt()}%"
+                imageId = context?.let { ContextCompat.getDrawable(it, appInstance.drawableIndexes[currentQuestion.imageId]) }
+                quizDescriptionText = currentQuestion.description
+
+                binding.invalidateAll()
+
+                binding.answer1.isEnabled = false
+                binding.answer2.isEnabled = false
+                binding.answer3.isEnabled = false
+                binding.answer4.isEnabled = false
+                drawDescriptionCorrectness()
+                binding.quizDescription.visibility = View.VISIBLE
+                binding.continueButton.visibility = View.VISIBLE
+                binding.progressBar.progress = (((questionIndex) / numQuestions.toFloat()) * 100).toInt()
+                binding.progressText.text = "${(((questionIndex) / numQuestions.toFloat()) * 100).toInt()}%"
                 break
             }
             index++
@@ -250,87 +214,87 @@ class QuizGameFragment : Fragment() {
         currentQuestion = questions[questionIndex]
         answers = currentQuestion.answers.split("|").toMutableList()
         answers.shuffle()
-        Log.d("testing", currentQuestion.toString())
     }
 
     private fun showRightAnswer(position: Int) {
         when(position) {
             0 -> {
-                firstAnswer.background =
+                binding.answer1.background =
                     this.context?.let { ContextCompat.getDrawable(it, R.drawable.right_quiz_button_selector) }
             }
             1 -> {
-                secondAnswer.background =
+                binding.answer2.background =
                     this.context?.let { ContextCompat.getDrawable(it, R.drawable.right_quiz_button_selector) }
             }
             2 -> {
-                thirdAnswer.background =
+                binding.answer3.background =
                     this.context?.let { ContextCompat.getDrawable(it, R.drawable.right_quiz_button_selector) }
             }
             3 -> {
-                fourthAnswer.background =
+                binding.answer4.background =
                     this.context?.let { ContextCompat.getDrawable(it, R.drawable.right_quiz_button_selector) }
             }
         }
     }
 
-    private fun drawQuestion() {
-        question.text = currentQuestion.question
-    }
-
-    private fun drawAnswers() {
+    private fun drawAnswerViews() {
         if (answers.size == 2) {
-            thirdAnswer.visibility = View.GONE
-            fourthAnswer.visibility = View.GONE
+            binding.answer3.visibility = View.GONE
+            binding.answer4.visibility = View.GONE
         }
         else {
-            thirdAnswer.visibility = View.VISIBLE
-            fourthAnswer.visibility = View.VISIBLE
-            checkBox3.text = answers[2]
-            checkBox4.text = answers[3]
+            binding.answer3.visibility = View.VISIBLE
+            binding.answer4.visibility = View.VISIBLE
         }
-        checkBox1.text = answers[0]
-        checkBox2.text = answers[1]
     }
 
-    private fun drawDescription() {
+    private fun drawDescriptionCorrectness() {
         if (questionResult) {
-            descCorrectness.text = "Correct"
-            descCorrectness.setTextColor(Color.parseColor("#57B920"))
+            binding.correctnessQuiz.text = "Correct"
+            binding.correctnessQuiz.setTextColor(Color.parseColor("#57B920"))
         }
         else {
-            descCorrectness.text = "Wrong"
-            descCorrectness.setTextColor(Color.parseColor("#D56225"))
+            binding.correctnessQuiz.text = "Wrong"
+            binding.correctnessQuiz.setTextColor(Color.parseColor("#D56225"))
         }
-
-        descText.text = currentQuestion.description
-    }
-
-    private fun drawImage() {
-        questionImage.background = this.context?.let { ContextCompat.getDrawable(it, appInstance.drawableIndexes[currentQuestion.imageId]) }
     }
 
     private fun refreshAnswers() {
-        firstAnswer.isEnabled = true
-        firstAnswer.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
-        secondAnswer.isEnabled = true
-        secondAnswer.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
-        thirdAnswer.isEnabled = true
-        thirdAnswer.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
-        fourthAnswer.isEnabled = true
-        fourthAnswer.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
-        description.visibility = View.INVISIBLE
-        continueButton.visibility = View.INVISIBLE
+        setQuestion()
+        imageId = context?.let { ContextCompat.getDrawable(it, appInstance.drawableIndexes[currentQuestion.imageId]) }
+
+        binding.answer1.isEnabled = true
+        binding.answer1.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
+        binding.answer2.isEnabled = true
+        binding.answer2.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
+        binding.answer3.isEnabled = true
+        binding.answer3.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
+        binding.answer4.isEnabled = true
+        binding.answer4.background = this.context?.let { ContextCompat.getDrawable(it, R.drawable.button_selector) }
+        binding.quizDescription.visibility = View.GONE
+        binding.continueButton.visibility = View.GONE
         for (checkbox in checkBoxes) checkbox.isChecked = false
-        drawQuestion()
-        drawAnswers()
-        drawImage()
+        drawAnswerViews()
+
+        binding.invalidateAll()
     }
 
     private suspend fun updateCoinCount() {
         lifecycleScope.launch {
-            coinCount.text = appInstance.count.toString()
-            delay(1000)
+            while (true) {
+                binding.quizGameCoinCount.text = appInstance.count.toString()
+                delay(1000)
+            }
+        }
+    }
+
+    private fun showViews() {
+        binding.questionImage.visibility = View.VISIBLE
+        binding.answer1.visibility = View.VISIBLE
+        binding.answer2.visibility = View.VISIBLE
+        if (currentQuestion.answers.split("|").size != 2) {
+            binding.answer3.visibility = View.VISIBLE
+            binding.answer4.visibility = View.VISIBLE
         }
     }
 

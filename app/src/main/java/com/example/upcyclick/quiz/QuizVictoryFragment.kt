@@ -71,8 +71,10 @@ class QuizVictoryFragment : Fragment() {
 
     private suspend fun updateCoinCount() {
         lifecycleScope.launch {
-            coinCount.text = appInstance.count.toString()
-            delay(1000)
+            while (true) {
+                coinCount.text = appInstance.count.toString()
+                delay(1000)
+            }
         }
     }
 

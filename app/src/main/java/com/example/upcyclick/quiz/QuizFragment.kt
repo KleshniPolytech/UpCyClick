@@ -44,6 +44,8 @@ class QuizFragment : Fragment() {
         return view
     }
 
+    fun test() ="test"
+
     private fun init(v: View) {
         easyButton = v.findViewById(R.id.easyQuizButton)
         mediumButton = v.findViewById(R.id.mediumQuizButton)
@@ -72,8 +74,10 @@ class QuizFragment : Fragment() {
 
     private suspend fun updateCoinCount() {
         lifecycleScope.launch {
-            coinCount.text = appInstance.count.toString()
-            delay(1000)
+            while (true) {
+                coinCount.text = appInstance.count.toString()
+                delay(1000)
+            }
         }
     }
 

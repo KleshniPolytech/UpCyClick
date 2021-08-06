@@ -240,7 +240,7 @@ class AppSingleton private constructor(var context: Context) {
             Question(
                 1,
                 "As an individual, I can do my part to help reduce food waste by (select the ONE best answer):",
-                "Learning more about upcycled foods|Supporting brands that use upcycled ingredients|Planning my meals so I know how much I need at the store|Using a tool like a Foodprint Calculator to understand the impact of my food choices",
+                "Learning more about upcycled foods|Supporting brands that use upcycled ingredients|Planning my meals so I know how much I need at the store|All of the above",
                 "All of the above",
                 "Fight climate change with diet change! Your food choices make an impact on our global environment. There is not one perfect diet for everyone, but we can all do our part to make the relationship with food we eat more sustainable!",
                 12
@@ -254,7 +254,6 @@ class AppSingleton private constructor(var context: Context) {
                 12 //TODO
             ),
         )
-
     }
 
     private fun fillScrollDB() {
