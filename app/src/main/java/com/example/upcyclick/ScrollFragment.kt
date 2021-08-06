@@ -22,6 +22,8 @@ class ScrollFragment : Fragment() {
     private lateinit var plusShop: ImageView
     private lateinit var donthave: TextView
     private lateinit var toShop: Button
+
+    private lateinit var coins : TextView
     private lateinit var list : List<Scroll>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +43,7 @@ class ScrollFragment : Fragment() {
         plusShop = v.findViewById(R.id.plusShop)
         donthave = v.findViewById(R.id.donthavelbl)
         toShop = v.findViewById(R.id.to_shop_button)
-
+        coins = v.findViewById(R.id.coins)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
@@ -57,7 +59,7 @@ class ScrollFragment : Fragment() {
             recyclerView.adapter = appInstance.context?.let { CustomRecyclerAdapter(list, it,v) }
 
         }
-
+            coins?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
     }
 
     override fun onResume() {

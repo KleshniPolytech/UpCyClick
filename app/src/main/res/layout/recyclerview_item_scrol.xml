@@ -2,6 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/lay_3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
     android:layout_marginTop="16dp"
     android:background="@drawable/button_selector"
     android:clickable="true"
@@ -57,4 +59,6 @@
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/rare_legend"
         app:layout_constraintTop_toBottomOf="@+id/rare_legend" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
