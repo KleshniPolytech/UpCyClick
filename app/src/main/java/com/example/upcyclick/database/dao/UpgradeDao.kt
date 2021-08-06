@@ -23,7 +23,7 @@ public interface UpgradeDao {
     fun deleteAll()
 
     @Query("SELECT * FROM upgrades WHERE purchased=1 ORDER BY income")
-    fun getAcquiredUpdates(): List<Upgrade>
+    fun getAcquiredUpdates(): MutableList<Upgrade>
 
     @Query("SELECT * FROM upgrades WHERE purchased = 0 ORDER BY income")
     fun getAvailable(): MutableList<Upgrade>

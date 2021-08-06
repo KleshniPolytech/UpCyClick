@@ -52,7 +52,7 @@ class ScrollFragment : Fragment() {
 
 
         val job = lifecycleScope.launch(Dispatchers.IO) {
-            list =  appInstance.upDB?.scrollDao()?.getAll() ?: listOf()
+            list =  appInstance.upDB?.scrollDao()?.getAllPurchasedScrolls() ?: listOf()
         }
         lifecycleScope.launch {
             job.join()

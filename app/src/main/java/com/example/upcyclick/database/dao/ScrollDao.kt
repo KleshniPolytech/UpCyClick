@@ -21,7 +21,7 @@ public interface ScrollDao {
     @Query("DELETE FROM scrolls")
     fun deleteAll()
 
-    @Query("SELECT * FROM scrolls WHERE purchased=1")
+    @Query("SELECT * FROM scrolls WHERE purchased=1 ORDER BY typeId")
     fun getAllPurchasedScrolls(): List<Scroll>
 
     @Query("SELECT * FROM scrolls WHERE purchased = 0 and typeId = :rarity")

@@ -21,7 +21,7 @@ class AppSingleton private constructor(var context: Context) {
 
     var upDB: UpDB? = null
 
-    var updatesList: List<Upgrade> = mutableListOf()
+    var updatesList: MutableList<Upgrade> = mutableListOf()
 
     var upgradeCount: Int = 1
 
@@ -33,6 +33,7 @@ class AppSingleton private constructor(var context: Context) {
     var boughtLegendaryScrollList: MutableList<Scroll>? = null
 
     var availableUpgradeList: MutableList<Upgrade>? = null
+    var allUpgradeList :List<Upgrade>? = null
 
     var drawableIndexes = arrayOf(
         R.drawable.q1,
@@ -76,6 +77,8 @@ class AppSingleton private constructor(var context: Context) {
             boughtLegendaryScrollList = upDB?.scrollDao()?.getBought(3)
 
             availableUpgradeList = upDB?.upgradeDao()?.getAvailable()
+
+            allUpgradeList = upDB?.upgradeDao()?.getAll()
 
             updatesList = upDB!!.upgradeDao().getAcquiredUpdates()
             Log.d("LIST1", updatesList.size.toString())

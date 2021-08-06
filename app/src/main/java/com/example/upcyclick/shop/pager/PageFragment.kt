@@ -29,11 +29,6 @@ class PageFragment : Fragment() {
     val rarePrice: Int = 10000
     val legendaryPrice: Int = 50000
 
-    val doubleClickPrice =  500
-    val tripleClickPrice = 1250
-    val quadrClickPrice =  3000
-    val megaClickPrice =  10000
-
     lateinit var singleton: AppSingleton
 
     private var mPage = 0
@@ -54,7 +49,7 @@ class PageFragment : Fragment() {
         if (mPage == 1){
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_upgrades)
             recyclerView.layoutManager = LinearLayoutManager(this.context)
-            recyclerView.adapter = UpgradeAdapter(singleton.availableUpgradeList!!)
+            recyclerView.adapter = UpgradeAdapter(singleton.allUpgradeList!!, tvCoins2)
         }
         else{
             val commonScroll = view.findViewById<ConstraintLayout>(R.id.lay_1)
@@ -103,6 +98,7 @@ class PageFragment : Fragment() {
                         //изменение синглетона (удаление из списка доступных и добавление в список купленных)
                         var index = Random().nextInt(singleton.availableCommonScrollList?.count()!!)
                         var newScroll = singleton.availableCommonScrollList?.removeAt(index)
+                        newScroll?.purchased = true
                         singleton.boughtCommonScrollList?.add(newScroll!!)
 
                         //отладочная информация
@@ -134,6 +130,7 @@ class PageFragment : Fragment() {
                         //изменение синглетона (удаление из списка доступных и добавление в список купленных)
                         var index = Random().nextInt(singleton.availableRareScrollList?.count()!!)
                         var newScroll = singleton.availableRareScrollList?.removeAt(index)
+                        newScroll?.purchased = true
                         singleton.boughtRareScrollList?.add(newScroll!!)
 
                         //отладочная информация
@@ -167,6 +164,7 @@ class PageFragment : Fragment() {
                         //изменение синглетона (удаление из списка доступных и добавление в список купленных)
                         var index = Random().nextInt(singleton.availableLegendaryScrollList?.count()!!)
                         var newScroll = singleton.availableLegendaryScrollList?.removeAt(index)
+                        newScroll?.purchased = true
                         singleton.boughtLegendaryScrollList?.add(newScroll!!)
 
                         //отладочная информация

@@ -7,12 +7,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.upcyclick.AppSingleton
 import com.example.upcyclick.R
 import com.example.upcyclick.database.entity.Scroll
 import com.example.upcyclick.database.entity.Upgrade
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
-class UpgradeAdapter (private val upgrades: MutableList<Upgrade>) :
+class UpgradeAdapter (private val upgrades: List<Upgrade>, var coins: TextView?) :
     RecyclerView.Adapter<UpgradeAdapter.MyViewHolder>() {
+
+        val doubleClickPrice =  500
+        val tripleClickPrice = 1250
+        val quadrClickPrice =  3000
+        val megaClickPrice =  10000
 
         class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var nameTextView: TextView? = null
@@ -21,6 +31,8 @@ class UpgradeAdapter (private val upgrades: MutableList<Upgrade>) :
             var imageView: ImageView? = null
             var buyTextView: TextView? = null
             var priceTextView: TextView? = null
+
+            lateinit var singleton: AppSingleton
             init {
                 nameTextView = itemView.findViewById(R.id.title_upgrade)
                 descriptionTextView = itemView.findViewById(R.id.descr_upgrade)
@@ -28,6 +40,8 @@ class UpgradeAdapter (private val upgrades: MutableList<Upgrade>) :
                 imageView = itemView.findViewById(R.id.image_view_icon_upgrade)
                 buyTextView = itemView.findViewById(R.id.buy_icon_3)
                 priceTextView = itemView.findViewById(R.id.price_count_3)
+
+                singleton = AppSingleton.getInstance(this.itemView.context)
             }
         }
 
@@ -68,10 +82,88 @@ class UpgradeAdapter (private val upgrades: MutableList<Upgrade>) :
                 }
             }
             if (upgrades[position].purchased){
-                holder.buyTextView?.text = ""
-                holder.buyTextView?.setBackgroundResource(R.drawable.ic_baseline_check_24)
-                holder.itemView.isClickable = false
+                buyUpgrade(holder)
             }
+            else
+                holder.itemView.setOnClickListener {
+                    when (upgrades[position].income) {
+                        2 -> {
+                            if (holder.singleton.count >= doubleClickPrice) {
+                                //изменение монет и списков в синглетоне
+                                holder.singleton.count -= doubleClickPrice
+                                var upg = holder.singleton.availableUpgradeList?.removeAt(0)
+                                upg?.purchased = true
+                                holder.singleton.updatesList.add(upg!!)
+                                holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                coins?.text = holder.singleton.count.toString() + " "
+                                //проигрывание анимации
+                                buyUpgrade(holder)
+                                //заполнение бд
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    holder.singleton.upDB?.upgradeDao()?.update(upg!!)
+                                }
+                            }
+
+                        }
+                        3 -> {
+                            if (holder.singleton.count >= tripleClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 3) {
+                                //изменение монет и списков в синглетоне
+                                holder.singleton.count -= tripleClickPrice
+                                var upg = holder.singleton.availableUpgradeList?.removeAt(0)
+                                upg?.purchased = true
+                                holder.singleton.updatesList.add(upg!!)
+                                holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                coins?.text = holder.singleton.count.toString() + " "
+                                //проигрывание анимации
+                                buyUpgrade(holder)
+                                //заполнение бд
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    holder.singleton.upDB?.upgradeDao()?.update(upg!!)
+                                }
+                            }
+                        }
+                        4 -> {
+                                if (holder.singleton.count >= quadrClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 4) {
+                                    //изменение монет и списков в синглетоне
+                                    holder.singleton.count -= quadrClickPrice
+                                    var upg = holder.singleton.availableUpgradeList?.removeAt(0)
+                                    upg?.purchased = true
+                                    holder.singleton.updatesList.add(upg!!)
+                                    holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                    coins?.text = holder.singleton.count.toString() + " "
+                                    //проигрывание анимации
+                                    buyUpgrade(holder)
+                                    //заполнение бд
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        holder.singleton.upDB?.upgradeDao()?.update(upg!!)
+                                    }
+                                }
+                        }
+                        5 -> {
+                                if (holder.singleton.count >= megaClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 5) {
+                                    //изменение монет и списков в синглетоне
+                                    holder.singleton.count -= megaClickPrice
+                                    var upg = holder.singleton.availableUpgradeList?.removeAt(0)
+                                    upg?.purchased = true
+                                    holder.singleton.updatesList.add(upg!!)
+                                    holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                    coins?.text = holder.singleton.count.toString() + " "
+                                    //проигрывание анимации
+                                    buyUpgrade(holder)
+                                    //заполнение бд
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        holder.singleton.upDB?.upgradeDao()?.update(upg!!)
+                                    }
+                                }
+                        }
+                    }
+                }
+        }
+
+        private fun buyUpgrade(holder: MyViewHolder){
+            holder.buyTextView?.text = ""
+            holder.buyTextView?.setBackgroundResource(R.drawable.ic_baseline_check_24)
+            holder.itemView.isClickable = false
         }
 
         override fun getItemCount() = upgrades.size

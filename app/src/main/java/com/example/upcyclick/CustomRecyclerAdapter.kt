@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
-import com.github.barteksc.pdfviewer.PDFView
 
 class CustomRecyclerAdapter(private val scrolls: List<Scroll>,private val context: Context,private val view: View) :
     RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>() {
@@ -22,7 +21,7 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>,private val contex
         var descriptionTextView: TextView? = null
         var imageView: ImageView? = null
         init {
-            nameTextView = itemView.findViewById(R.id.title_upgrade)
+            nameTextView = itemView.findViewById(R.id.rare_legend)
             descriptionTextView = itemView.findViewById(R.id.descr_legend)
             imageView = itemView.findViewById(R.id.imageView_scrol_2)
         }
