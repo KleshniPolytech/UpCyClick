@@ -1,14 +1,20 @@
 package com.example.upcyclick
 
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
+import com.github.barteksc.pdfviewer.PDFView
 
-class CustomRecyclerAdapter(private val scrolls: List<Scroll>) :
+class CustomRecyclerAdapter(private val scrolls: List<Scroll>,private val context: Context,private val view: View) :
     RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,13 +35,26 @@ class CustomRecyclerAdapter(private val scrolls: List<Scroll>) :
         return MyViewHolder(itemView)
     }
 
+    
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.nameTextView?.text = scrolls[position].name
         holder.descriptionTextView?.text = scrolls[position].description
-        //todo изменять картинку по типу
-//        holder.imageView = when(scrolls[position].type){
-//
-//        }
+        Log.d("typeID ",""+scrolls[position].typeId)
+
+        holder.imageView?.setImageResource(when(scrolls[position].typeId){
+            1->R.drawable.ic_common_scroll//todo чекните id скроллов
+            2->R.drawable.ic_rare_scroll
+            else -> R.drawable.ic_legendary_scroll
+        }
+        )
+
+        holder.itemView.setOnClickListener {
+            run {
+                val bundle = Bundle()
+                bundle.putString("pdfName",scrolls[position].filePath)
+                view.findNavController().navigate(R.id.action_scrollFragment_to_pdfReaderFragment,bundle)
+            }
+        }
     }
 
     override fun getItemCount() = scrolls.size
