@@ -4,10 +4,10 @@ import androidx.room.*
 import com.example.upcyclick.database.entity.Question
 
 @Dao
-interface QuestionDao {
+public interface QuestionDao {
     //Здесь находятся все запросы для этой сущности (можно добавлять свои сколько угодно)
     @Insert
-    fun insert(question: Question)
+    fun insert(vararg question: Question)
 
     @Update
     fun update(question: Question)
@@ -20,4 +20,7 @@ interface QuestionDao {
 
     @Query("DELETE FROM questions")
     fun deleteAll()
+
+    @Query("SELECT * FROM questions WHERE difficulty=:dif")
+    fun getAllByDif(dif: Int): List<Question>
 }

@@ -7,22 +7,71 @@
 
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.upcyclick.QuizFragment"
+        android:name="com.example.upcyclick.quiz.QuizFragment"
         android:label="fragment_quiz"
-        tools:layout="@layout/fragment_quiz" />
+        tools:layout="@layout/fragment_quiz">
+        <action
+            android:id="@+id/action_quizFragment_to_quizGameFragment"
+            app:destination="@id/quizGameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/scrollFragment"
         android:name="com.example.upcyclick.ScrollFragment"
         android:label="fragment_scroll"
-        tools:layout="@layout/fragment_scroll" />
+        tools:layout="@layout/fragment_scroll">
+    <action
+        android:id="@+id/action_scrollFragment_to_pdfReaderFragment"
+        app:destination="@id/pdfFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pdfFragment"
+        android:name="com.example.upcyclick.PDFFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_pdf_reader" />
+
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.example.upcyclick.ShopFragment"
+        android:name="com.example.upcyclick.shop.ShopFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.upcyclick.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizGameFragment"
+        android:name="com.example.upcyclick.quiz.QuizGameFragment"
+        android:label="fragment_quiz_game"
+        tools:layout="@layout/fragment_quiz_game" >
+        <action
+            android:id="@+id/action_quizGameFragment_to_quizVictoryFragment"
+            app:destination="@id/quizVictoryFragment" />
+        <action
+            android:id="@+id/action_quizGameFragment_to_quizLossFragment"
+            app:destination="@id/quizLossFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizLossFragment"
+        android:name="com.example.upcyclick.quiz.QuizLossFragment"
+        android:label="fragment_quiz_loss"
+        tools:layout="@layout/fragment_quiz_loss" >
+        <action
+            android:id="@+id/action_quizLossFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizVictoryFragment"
+        android:name="com.example.upcyclick.quiz.QuizVictoryFragment"
+        android:label="fragment_quiz_victory"
+        tools:layout="@layout/fragment_quiz_victory" >
+        <action
+            android:id="@+id/action_quizVictoryFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
 </navigation>

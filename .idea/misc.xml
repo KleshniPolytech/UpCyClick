@@ -4,19 +4,77 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/button_selector.xml" value="0.22407407407407406" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/checkbox_selector.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/empty_checkbox.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/full_checkbox.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/home_selected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/home_unselected.xml" value="0.19444444444444445" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_baseline_battery_unknown_24.xml" value="0.2222222222222222" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2222222222222222" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.2222222222222222" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_baseline_topic_24.xml" value="0.2222222222222222" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_big_up.xml" value="0.14635416666666667" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_up_very_small.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/ic_upcoin.xml" value="0.19444444444444445" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/menu_selector.xml" value="0.2222222222222222" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/progress_bar_style.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/quiz_selected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/quiz_selector.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/quiz_unselected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/right_quiz_button_selector.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/scroll_selected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/scroll_selector.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/scroll_unselected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/shop_selected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/shop_selector.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/shop_unselected.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/simple_selector.xml" value="0.19444444444444445" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/tab_selector.xml" value="0.19444444444444445" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/up_button_selector.xml" value="0.14635416666666667" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/drawable/wrong_quiz_button_selector.xml" value="0.19444444444444445" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/font/roboto_light.xml" value="0.16041666666666668" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/activity_quiz.xml" value="0.25416666666666665" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_page.xml" value="0.536" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_page_2.xml" value="0.16203703703703703" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_quiz.xml" value="0.2210144927536232" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_quiz_game.xml" value="0.2210144927536232" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_quiz_loss.xml" value="0.2210144927536232" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_quiz_victory.xml" value="0.2210144927536232" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_scroll.xml" value="0.2210144927536232" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/fragment_shop.xml" value="0.2210144927536232" />
+        <entry key="..\:/AndProject/UpCyClick/app/src/main/res/layout/tab_item.xml" value="0.2210144927536232" />
         <entry key="..\:/AndProject/UpCyClick/app/src/main/res/menu/menu_nav.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/activity_main.xml" value="0.3383152173913043" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/fragment_page.xml" value="0.3582427536231884" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/fragment_page_2.xml" value="0.33" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/fragment_pdf_reader.xml" value="0.333786231884058" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/fragment_scroll.xml" value="0.3423913043478261" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/recyclerview_item_scrol.xml" value="0.3423913043478261" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/layout/recyclerview_item_upgrade.xml" value="0.3423913043478261" />
+        <entry key="..\:/Android/proj/UpCyClick/app/src/main/res/menu/menu_nav.xml" value="0.36666666666666664" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/drawable/button_selector.xml" value="0.3355855855855856" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/drawable/checkbox_selector.xml" value="0.3355855855855856" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/drawable/ic_big_up.xml" value="0.3880208333333333" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/drawable/progress_bar_style.xml" value="0.3880208333333333" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/drawable/right_quiz_button_selector.xml" value="0.3355855855855856" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/drawable/wrong_quiz_button_selector.xml" value="0.3355855855855856" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/font/roboto.xml" value="0.40208333333333335" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/font/roboto_bold.xml" value="0.40208333333333335" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/font/roboto_light.xml" value="0.40208333333333335" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/font/roboto_medium.xml" value="0.40208333333333335" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/fragment_home.xml" value="0.28940217391304346" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/fragment_quiz.xml" value="0.371875" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/fragment_quiz_game.xml" value="0.33" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/fragment_quiz_loss.xml" value="0.3216216216216216" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/fragment_quiz_victory.xml" value="0.3216216216216216" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/recyclerview_item_scrol.xml" value="0.23153153153153153" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/recyclerview_item_upgrade.xml" value="0.23153153153153153" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/layout/tab_item.xml" value="0.23153153153153153" />
+        <entry key="..\:/UpCyClickProject/app/src/main/res/menu/menu_nav.xml" value="0.371875" />
       </map>
     </option>
   </component>
