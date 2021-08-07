@@ -48,14 +48,12 @@
     <Transition
         motion:constraintSetStart="@+id/common_buy_cs"
         motion:constraintSetEnd="@+id/do_buy_cs"
-        android:id="@+id/tr1"
-        motion:duration="1500">
+        android:id="@+id/tr1">
     </Transition>
     <Transition
         motion:constraintSetStart="@+id/do_buy_cs"
         motion:constraintSetEnd="@+id/common_buy_cs"
         motion:autoTransition="animateToEnd"
-        motion:duration="1500"
         />
 
     <ConstraintSet android:id="@+id/rare_buy_cs" >
@@ -102,13 +100,13 @@
         motion:constraintSetStart="@+id/rare_buy_cs"
         motion:constraintSetEnd="@+id/do_buy_cs_2"
         android:id="@+id/tr2"
-        motion:duration="1500">
+        >
     </Transition>
     <Transition
         motion:constraintSetStart="@+id/do_buy_cs_2"
         motion:constraintSetEnd="@+id/rare_buy_cs"
         motion:autoTransition="animateToEnd"
-        motion:duration="1500"
+
         />
 
     <ConstraintSet android:id="@+id/legendary_buy_cs" >
@@ -155,13 +153,13 @@
         motion:constraintSetStart="@+id/legendary_buy_cs"
         motion:constraintSetEnd="@+id/do_buy_cs_3"
         android:id="@+id/tr3"
-        motion:duration="1500">
+        >
     </Transition>
     <Transition
         motion:constraintSetStart="@+id/do_buy_cs_3"
         motion:constraintSetEnd="@+id/legendary_buy_cs"
         motion:autoTransition="animateToEnd"
-        motion:duration="1500"
+
         />
 
 </MotionScene>
