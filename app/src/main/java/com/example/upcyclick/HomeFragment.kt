@@ -14,11 +14,13 @@ import kotlinx.coroutines.*
 
 
 class HomeFragment : Fragment() {
-
-
     private lateinit var upButton: Button
     private lateinit var toQuizButton: Button
     private lateinit var coinCountTextView: TextView
+
+    private lateinit var commonButton: Button
+    private lateinit var rareButton: Button
+    private lateinit var legendaryButton: Button
 
     lateinit var appInstance: AppSingleton
 
@@ -37,6 +39,10 @@ class HomeFragment : Fragment() {
         coinCountTextView = view.findViewById(R.id.coin_count)
         toQuizButton = view.findViewById(R.id.to_shop_button)
 
+        commonButton = view.findViewById(R.id.common_count)
+        rareButton = view.findViewById(R.id.rare_count)
+        legendaryButton = view.findViewById(R.id.legendary_count)
+
         coinCountTextView.text = appInstance.count.toString()
 
 
@@ -51,14 +57,18 @@ class HomeFragment : Fragment() {
                 .navigate(HomeFragmentDirections.actionHomeFragmentToQuizFragment())
         }
 
+        if (isCommonExist()) commonButton.text = "Common scroll   x${appInstance.boughtCommonScrollList!!.size}"
+        if (isRareExist()) rareButton.text = "Rare scroll   x${appInstance.boughtRareScrollList!!.size}"
+        if (isLegendaryExist()) legendaryButton.text = "Legendary scroll   x${appInstance.boughtLegendaryScrollList!!.size}"
+
         if (!appInstance.coinCounterLaunched) GlobalScope.launch(Dispatchers.Main) {
             appInstance.coinCounterLaunched = true
             Log.d("testing", "coroutine launched")
             while (true) {
                 var sum = 0
-                if (appInstance.boughtCommonScrollList != null) sum += appInstance.commonScrollIncome * appInstance.boughtCommonScrollList!!.size
-                if (appInstance.boughtRareScrollList != null) sum += appInstance.rareScrollIncome * appInstance.boughtRareScrollList!!.size
-                if (appInstance.boughtLegendaryScrollList != null) sum += appInstance.legendaryScrollIncome * appInstance.boughtLegendaryScrollList!!.size
+                if (isCommonExist()) sum += appInstance.commonScrollIncome * appInstance.boughtCommonScrollList!!.size
+                if (isRareExist()) sum += appInstance.rareScrollIncome * appInstance.boughtRareScrollList!!.size
+                if (isLegendaryExist()) sum += appInstance.legendaryScrollIncome * appInstance.boughtLegendaryScrollList!!.size
 
                 appInstance.count += sum
 
@@ -76,6 +86,10 @@ class HomeFragment : Fragment() {
 
         return view
     }
+
+    fun isCommonExist() = appInstance.boughtCommonScrollList != null
+    fun isRareExist() = appInstance.boughtRareScrollList != null
+    fun isLegendaryExist() = appInstance.boughtLegendaryScrollList != null
 
     override fun onResume() {
 

@@ -7,8 +7,8 @@
     <string name="quiz">Quiz</string>
     <string name="buy_scroll">Buy now!</string>
     <string name="income">Income</string>
-    <string name="common_scroll">Common scroll</string>
-    <string name="rare_scroll">Rare scroll</string>
-    <string name="legendary_scroll">Legendary scroll</string>
+    <string name="common_scroll">Common scroll   x0</string>
+    <string name="rare_scroll">Rare scroll   x0</string>
+    <string name="legendary_scroll">Legendary scroll   x0</string>
     <string name="up">UP</string>
 </resources>

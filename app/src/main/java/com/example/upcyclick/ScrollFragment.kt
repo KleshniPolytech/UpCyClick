@@ -52,6 +52,8 @@ class ScrollFragment : Fragment() {
         toShop = v.findViewById(R.id.to_shop_button)
         coins = v.findViewById(R.id.coinCount)
 
+
+
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
 
@@ -60,7 +62,9 @@ class ScrollFragment : Fragment() {
 
         val job = lifecycleScope.launch(Dispatchers.IO) {
             list =  appInstance.upDB?.scrollDao()?.getAllPurchasedScrolls() ?: listOf()
+            if (list.size != 0) hide()
         }
+
         lifecycleScope.launch {
             job.join()
             recyclerView.adapter = appInstance.context?.let { CustomRecyclerAdapter(list, it,v) }
@@ -82,9 +86,6 @@ class ScrollFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        if (list.size != 0) hide()
-
     }
     private fun hide() {
         plusShop.visibility = View.INVISIBLE
