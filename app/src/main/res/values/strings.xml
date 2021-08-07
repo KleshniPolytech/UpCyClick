@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">UpCyClick</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="balance">Balance</string>
+    <string name="balance_count">123456</string>
+    <string name="quiz">Quiz</string>
+    <string name="income">Income</string>
+    <string name="common_scroll">Common scroll</string>
+    <string name="rare_scroll">Rare scroll</string>
+    <string name="legendary_scroll">Legendary scroll</string>
+    <string name="up">UP</string>
 </resources>
