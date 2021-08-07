@@ -54,7 +54,7 @@ class QuizFragment : Fragment() {
 
         appInstance = AppSingleton.getInstance(this.requireContext())
 
-        coinCount = v.findViewById(R.id.quizCoinCount)
+        coinCount = v.findViewById(R.id.coinCount)
     }
 
     private fun initListeners(v: View) {

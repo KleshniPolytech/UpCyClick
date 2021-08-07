@@ -43,7 +43,7 @@ class PageFragment : Fragment() {
                      savedInstanceState: Bundle?): View? {
 
         val view = if (mPage == 1) inflater.inflate(R.layout.fragment_page, container, false) else inflater.inflate(R.layout.fragment_page_2, container, false)
-        val tvCoins2 = activity?.findViewById<TextView>(R.id.coins)
+        val tvCoins2 = activity?.findViewById<TextView>(R.id.coinCount)
         singleton = AppSingleton.getInstance(this.requireContext())
 
         if (mPage == 1){

@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        super.onStop()
         onSave()
+        super.onStop()
     }
 
 

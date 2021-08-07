@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ScrollFragment : Fragment() {
@@ -25,6 +27,11 @@ class ScrollFragment : Fragment() {
 
     private lateinit var coins : TextView
     private lateinit var list : List<Scroll>
+
+    private lateinit var coroutine: Job
+
+    lateinit var appInstance: AppSingleton
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,12 +50,12 @@ class ScrollFragment : Fragment() {
         plusShop = v.findViewById(R.id.plusShop)
         donthave = v.findViewById(R.id.donthavelbl)
         toShop = v.findViewById(R.id.to_shop_button)
-        coins = v.findViewById(R.id.coins)
+        coins = v.findViewById(R.id.coinCount)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
 
-        var appInstance: AppSingleton = AppSingleton.getInstance(this.requireContext())
+        appInstance = AppSingleton.getInstance(this.requireContext())
 
 
         val job = lifecycleScope.launch(Dispatchers.IO) {
@@ -59,7 +66,18 @@ class ScrollFragment : Fragment() {
             recyclerView.adapter = appInstance.context?.let { CustomRecyclerAdapter(list, it,v) }
 
         }
-            coins?.text = AppSingleton.getInstance(this.requireContext()).count.toString() + " "
+        coroutine = lifecycleScope.launch {
+            updateCoinCount()
+        }
+    }
+
+    private suspend fun updateCoinCount() {
+        lifecycleScope.launch {
+            while (true) {
+                coins.text = appInstance.count.toString()
+                delay(1000)
+            }
+        }
     }
 
     override fun onResume() {

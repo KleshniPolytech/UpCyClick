@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 
 import com.google.android.material.tabs.TabLayout
 
@@ -18,13 +19,18 @@ import com.example.upcyclick.AppSingleton
 import com.example.upcyclick.R
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class ShopFragment : Fragment() {
 
-    var tvCoins: TextView? = null
+    lateinit var tvCoins: TextView
 
     lateinit var singleton: AppSingleton
+
+    private lateinit var coroutine: Job
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -35,7 +41,7 @@ class ShopFragment : Fragment() {
 
         singleton = AppSingleton.getInstance(this.requireContext())
         //делаем много коинов, потому что мне впадлу их фармить
-        singleton.count = 1000000
+//        singleton.count = 1000000000
 
         // Получаем ViewPager и устанавливаем в него адаптер
         val viewPager: ViewPager2 = view.findViewById(R.id.viewpager)
@@ -86,12 +92,24 @@ class ShopFragment : Fragment() {
             }
         })
 
-        tvCoins = view.findViewById<TextView>(R.id.coins)
+        tvCoins = view.findViewById(R.id.coinCount)
 
         println(AppSingleton.getInstance(this.requireContext()).count)
-        tvCoins?.text = singleton.count.toString() + " "
+
+        coroutine = lifecycleScope.launch {
+            updateCoinCount()
+        }
 
         return view
+    }
+
+    private suspend fun updateCoinCount() {
+        lifecycleScope.launch {
+            while (true) {
+                tvCoins.text = singleton.count.toString()
+                delay(1000)
+            }
+        }
     }
 
     override fun onPause() {

@@ -11,6 +11,8 @@ import kotlinx.coroutines.*
 
 class AppSingleton private constructor(var context: Context) {
 
+    var coinCounterLaunched = false
+
     var count: Int = 0
 
     var currentQuizDifficulty: Int = 0

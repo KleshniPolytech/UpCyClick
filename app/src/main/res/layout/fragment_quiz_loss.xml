@@ -7,7 +7,7 @@
     tools:context=".quiz.QuizVictoryFragment">
 
     <View
-        android:id="@+id/quizCoinIcon"
+        android:id="@+id/coinIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
@@ -24,9 +24,9 @@
         android:text="9999"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/quizCoinIcon"
-        app:layout_constraintEnd_toStartOf="@+id/quizCoinIcon"
-        app:layout_constraintTop_toTopOf="@+id/quizCoinIcon" />
+        app:layout_constraintBottom_toBottomOf="@+id/coinIcon"
+        app:layout_constraintEnd_toStartOf="@+id/coinIcon"
+        app:layout_constraintTop_toTopOf="@+id/coinIcon" />
 
     <TextView
         android:id="@+id/textView3"
@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/playAgainButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quizCoinIcon"
+        app:layout_constraintTop_toBottomOf="@+id/coinIcon"
         app:layout_constraintVertical_bias="0.431" />
 
     <Button
