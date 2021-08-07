@@ -97,10 +97,8 @@ class AppSingleton private constructor(var context: Context) {
     }
 
     fun updateUpgradeCount() {
-
         var size: Int? = updatesList.size
         upgradeCount = updatesList[size!!.minus(1)].income
-
     }
 
     private fun getUpdateList(): List<Upgrade> {

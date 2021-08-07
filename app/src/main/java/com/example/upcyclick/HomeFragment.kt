@@ -2,12 +2,12 @@ package com.example.upcyclick
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import kotlinx.coroutines.*
@@ -47,21 +47,28 @@ class HomeFragment : Fragment() {
         }
 
         toQuizButton.setOnClickListener {
-            view.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToQuizFragment())
+            view.findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToQuizFragment())
         }
 
         if (!appInstance.coinCounterLaunched) GlobalScope.launch(Dispatchers.Main) {
             appInstance.coinCounterLaunched = true
             Log.d("testing", "coroutine launched")
             while (true) {
-                appInstance.count++
+                var sum = 0
+                if (appInstance.boughtCommonScrollList != null) sum += appInstance.commonScrollIncome * appInstance.boughtCommonScrollList!!.size
+                if (appInstance.boughtRareScrollList != null) sum += appInstance.rareScrollIncome * appInstance.boughtRareScrollList!!.size
+                if (appInstance.boughtLegendaryScrollList != null) sum += appInstance.legendaryScrollIncome * appInstance.boughtLegendaryScrollList!!.size
+
+                appInstance.count += sum
+
                 delay(1000)
             }
         }
 
         lifecycleScope.launch {
             delay(1000)
-            while(true) {
+            while (true) {
                 coinCountTextView.text = appInstance.count.toString()
                 delay(1000)
             }
@@ -73,9 +80,9 @@ class HomeFragment : Fragment() {
     override fun onResume() {
 
         super.onResume()
-        Log.d("LIST5" , "A")
-        if(AppSingleton.getInstance(requireContext()).updatesList.isNotEmpty()) {
-            Log.d("LIST5" , "B")
+        Log.d("LIST5", "A")
+        if (AppSingleton.getInstance(requireContext()).updatesList.isNotEmpty()) {
+            Log.d("LIST5", "B")
             AppSingleton.getInstance(requireContext()).updateUpgradeCount()
         }
     }
