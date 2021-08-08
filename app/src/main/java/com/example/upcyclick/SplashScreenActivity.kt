@@ -7,7 +7,7 @@ import android.os.Handler
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private var TIME_OUT:Long = 1500
+    private var TIME_OUT:Long = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

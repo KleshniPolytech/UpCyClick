@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -25,6 +26,8 @@ class HomeFragment : Fragment() {
     private lateinit var commonIncome: TextView
     private lateinit var rareIncome: TextView
     private lateinit var legendaryIncome: TextView
+
+    private lateinit var totalIncomeTV: TextView
 
     lateinit var appInstance: AppSingleton
 
@@ -51,6 +54,8 @@ class HomeFragment : Fragment() {
         rareIncome = view.findViewById(R.id.rareIncome)
         legendaryIncome = view.findViewById(R.id.legIncome)
 
+        totalIncomeTV = view.findViewById(R.id.totalIncome)
+
         coinCountTextView.text = appInstance.count.toString()
 
 
@@ -65,18 +70,45 @@ class HomeFragment : Fragment() {
                 .navigate(HomeFragmentDirections.actionHomeFragmentToQuizFragment())
         }
 
+        return view
+    }
+
+
+
+    fun isCommonExist() = appInstance.boughtCommonScrollList != null
+    fun isRareExist() = appInstance.boughtRareScrollList != null
+    fun isLegendaryExist() = appInstance.boughtLegendaryScrollList != null
+
+    override fun onResume() {
+        super.onResume()
+
+        Thread.sleep(100)
+
+        Log.d("LIST5", "A")
+        if (AppSingleton.getInstance(requireContext()).updatesList.isNotEmpty()) {
+            Log.d("LIST5", "B")
+            AppSingleton.getInstance(requireContext()).updateUpgradeCount()
+        }
+
+        var totalIncome = 0
+
         if (isCommonExist()) {
             commonCount.text = "x${appInstance.boughtCommonScrollList!!.size}"
-            commonIncome.text = "${appInstance.boughtCommonScrollList!!.size * appInstance.commonScrollIncome}/sec"
+            commonIncome.text = "+${appInstance.boughtCommonScrollList!!.size * appInstance.commonScrollIncome}/sec"
+            totalIncome += appInstance.boughtCommonScrollList!!.size * appInstance.commonScrollIncome
         }
         if (isRareExist()) {
             rareCount.text = "x${appInstance.boughtRareScrollList!!.size}"
-            rareIncome.text = "${appInstance.boughtRareScrollList!!.size * appInstance.rareScrollIncome}/sec"
+            rareIncome.text = "+${appInstance.boughtRareScrollList!!.size * appInstance.rareScrollIncome}/sec"
+            totalIncome += appInstance.boughtRareScrollList!!.size * appInstance.rareScrollIncome
         }
         if (isLegendaryExist()) {
             legendaryCount.text = "x${appInstance.boughtLegendaryScrollList!!.size}"
-            legendaryIncome.text = "${appInstance.boughtLegendaryScrollList!!.size * appInstance.legendaryScrollIncome}/sec"
+            legendaryIncome.text = "+${appInstance.boughtLegendaryScrollList!!.size * appInstance.legendaryScrollIncome}/sec"
+            totalIncome += appInstance.boughtLegendaryScrollList!!.size * appInstance.legendaryScrollIncome
         }
+
+        totalIncomeTV.text = "+${totalIncome}/sec"
 
         if (!appInstance.coinCounterLaunched) GlobalScope.launch(Dispatchers.Main) {
             appInstance.coinCounterLaunched = true
@@ -99,22 +131,6 @@ class HomeFragment : Fragment() {
                 coinCountTextView.text = appInstance.count.toString()
                 delay(1000)
             }
-        }
-
-        return view
-    }
-
-    fun isCommonExist() = appInstance.boughtCommonScrollList != null
-    fun isRareExist() = appInstance.boughtRareScrollList != null
-    fun isLegendaryExist() = appInstance.boughtLegendaryScrollList != null
-
-    override fun onResume() {
-
-        super.onResume()
-        Log.d("LIST5", "A")
-        if (AppSingleton.getInstance(requireContext()).updatesList.isNotEmpty()) {
-            Log.d("LIST5", "B")
-            AppSingleton.getInstance(requireContext()).updateUpgradeCount()
         }
     }
 
