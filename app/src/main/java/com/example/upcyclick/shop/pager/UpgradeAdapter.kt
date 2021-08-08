@@ -33,6 +33,7 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
             var imageView: ImageView? = null
             var buyTextView: TextView? = null
             var priceTextView: TextView? = null
+            var purchaseIcon: View? = null
 
             lateinit var singleton: AppSingleton
             init {
@@ -42,6 +43,7 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
                 imageView = itemView.findViewById(R.id.image_view_icon_upgrade)
                 buyTextView = itemView.findViewById(R.id.buy_icon_3)
                 priceTextView = itemView.findViewById(R.id.price_count_3)
+                purchaseIcon = itemView.findViewById(R.id.imageView__3)
 
                 singleton = AppSingleton.getInstance(this.itemView.context)
             }
@@ -82,7 +84,7 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
                                     holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
                             }
-                            //updateItems(holder, position)
+                            notifyDataSetChanged()
                         }
                         3 -> {
                             if (holder.singleton.count >= tripleClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 3) {
@@ -100,7 +102,7 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
                                     holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
                             }
-                            //updateItems(holder, position)
+                            notifyDataSetChanged()
                         }
                         4 -> {
                             if (holder.singleton.count >= quadrClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 4) {
@@ -118,7 +120,7 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
                                     holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
                             }
-                            //updateItems(holder, position)
+                            notifyDataSetChanged()
                         }
                         5 -> {
                             if (holder.singleton.count >= megaClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 5) {
@@ -155,21 +157,61 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
                 holder.incomeTextView?.text = "+3/click "
                 holder.imageView?.setImageResource(R.drawable.ic_triple_click)
                 holder.priceTextView?.text = "1250 "
-                //if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+                if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) {
+                    holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+                    holder.itemView.isEnabled = false
+                    holder.buyTextView?.text = ""
+                    holder.buyTextView?.setBackgroundResource(R.drawable.lock)
+                    holder.purchaseIcon?.background = null
+                }
+                else {
+                    holder.itemView.setBackgroundResource(R.drawable.button_selector)
+                    holder.itemView.isEnabled = true
+                    holder.buyTextView?.background = null
+
+                    holder.buyTextView?.text = "Buy"
+                    holder.purchaseIcon?.setBackgroundResource(R.drawable.shop_selected)
+                }
             }
             4 -> {
                 holder.descriptionTextView?.text = "Getting 4 UpCoins for one click"
                 holder.incomeTextView?.text = "+4/click "
                 holder.imageView?.setImageResource(R.drawable.ic_qudr_click)
                 holder.priceTextView?.text = "3000 "
-                //if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+                if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) {
+                    holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+                    holder.itemView.isEnabled = false
+                    holder.buyTextView?.text = ""
+                    holder.buyTextView?.setBackgroundResource(R.drawable.lock)
+                    holder.purchaseIcon?.background = null
+                }
+                else {
+                    holder.itemView.setBackgroundResource(R.drawable.button_selector)
+                    holder.itemView.isEnabled = true
+                    holder.buyTextView?.background = null
+                    holder.buyTextView?.text = "Buy"
+                    holder.purchaseIcon?.setBackgroundResource(R.drawable.shop_selected)
+                }
             }
             5 -> {
                 holder.descriptionTextView?.text = "Getting 5 UpCoins for one click"
                 holder.incomeTextView?.text = "+5/click "
                 holder.imageView?.setImageResource(R.drawable.ic_mega_click)
                 holder.priceTextView?.text = "10000 "
-                //if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+                if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) {
+                    holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+                    holder.itemView.isEnabled = false
+                    holder.buyTextView?.text = ""
+                    holder.buyTextView?.setBackgroundResource(R.drawable.lock)
+                    holder.purchaseIcon?.background = null
+                }
+                else {
+                    holder.itemView.setBackgroundResource(R.drawable.button_selector)
+                    holder.itemView.isEnabled = true
+                    holder.buyTextView?.background = null
+                    holder.buyTextView?.text = "Buy"
+                    holder.purchaseIcon?.setBackgroundResource(R.drawable.shop_selected)
+                }
             }
         }
     }

@@ -82,12 +82,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/shop_selected" />
+        android:background="@drawable/shop_selected"/>
 
     <TextView
         android:id="@+id/buy_icon_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:fontFamily="@font/roboto_bold"
