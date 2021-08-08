@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +26,7 @@ import com.example.upcyclick.shop.ShopFragment
 import com.example.upcyclick.shop.ShopFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -59,7 +62,9 @@ class PageFragment : Fragment() {
         if (mPage == 1){
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_upgrades)
             recyclerView.layoutManager = LinearLayoutManager(this.context)
-            recyclerView.adapter = UpgradeAdapter(singleton.allUpgradeList!!, tvCoins2)
+            recyclerView.itemAnimator = null
+            val adapter = UpgradeAdapter(singleton.allUpgradeList!!, tvCoins2)
+            recyclerView.adapter = adapter
         }
         else{
             val commonScroll = view.findViewById<ConstraintLayout>(R.id.lay_1)
@@ -140,6 +145,9 @@ class PageFragment : Fragment() {
                         qwe.transitionToEnd()
 
                     }
+                    else {
+                        Toast.makeText(context, "You have no enough money for the purchase", Toast.LENGTH_SHORT).show()
+                    }
                 }
             else{
                 allCommonBought(commonScroll)
@@ -172,7 +180,9 @@ class PageFragment : Fragment() {
                         qwe.transitionToEnd()
                         commonScroll.isClickable = false
                         legendaryScroll.isClickable = false
-
+                    }
+                    else {
+                        Toast.makeText(context, "You have no enough money for the purchase", Toast.LENGTH_SHORT).show()
                     }
                 }
             else{
@@ -206,7 +216,9 @@ class PageFragment : Fragment() {
                         qwe.transitionToEnd()
                         rareScroll.isClickable = false
                         commonScroll.isClickable = false
-
+                    }
+                    else {
+                        Toast.makeText(context, "You have no enough money for the purchase", Toast.LENGTH_SHORT).show()
                     }
                 }
             else{

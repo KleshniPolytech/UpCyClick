@@ -1,11 +1,13 @@
 package com.example.upcyclick.shop.pager
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.AppSingleton
 import com.example.upcyclick.R
@@ -16,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-class UpgradeAdapter (private val upgrades: List<Upgrade>, var coins: TextView?) :
+class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?) :
     RecyclerView.Adapter<UpgradeAdapter.MyViewHolder>() {
 
         val doubleClickPrice =  500
@@ -55,32 +57,9 @@ class UpgradeAdapter (private val upgrades: List<Upgrade>, var coins: TextView?)
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.nameTextView?.text = upgrades[position].name
-            when (upgrades[position].income){
-                2 -> {
-                    holder.descriptionTextView?.text = "Getting 2 UpCoins for one click"
-                    holder.incomeTextView?.text = "+2/click "
-                    holder.imageView?.setImageResource(R.drawable.ic_double_click)
-                    holder.priceTextView?.text = "500 "
-                }
-                3 -> {
-                    holder.descriptionTextView?.text = "Getting 3 UpCoins for one click"
-                    holder.incomeTextView?.text = "+3/click "
-                    holder.imageView?.setImageResource(R.drawable.ic_triple_click)
-                    holder.priceTextView?.text = "1250 "
-                }
-                4 -> {
-                    holder.descriptionTextView?.text = "Getting 4 UpCoins for one click"
-                    holder.incomeTextView?.text = "+4/click "
-                    holder.imageView?.setImageResource(R.drawable.ic_qudr_click)
-                    holder.priceTextView?.text = "3000 "
-                }
-                5 -> {
-                    holder.descriptionTextView?.text = "Getting 5 UpCoins for one click"
-                    holder.incomeTextView?.text = "+5/click "
-                    holder.imageView?.setImageResource(R.drawable.ic_mega_click)
-                    holder.priceTextView?.text = "10000 "
-                }
-            }
+
+            updateItems(holder, position)
+
             if (upgrades[position].purchased){
                 buyUpgrade(holder)
             }
@@ -103,7 +82,7 @@ class UpgradeAdapter (private val upgrades: List<Upgrade>, var coins: TextView?)
                                     holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
                             }
-
+                            //updateItems(holder, position)
                         }
                         3 -> {
                             if (holder.singleton.count >= tripleClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 3) {
@@ -121,44 +100,79 @@ class UpgradeAdapter (private val upgrades: List<Upgrade>, var coins: TextView?)
                                     holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
                             }
+                            //updateItems(holder, position)
                         }
                         4 -> {
-                                if (holder.singleton.count >= quadrClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 4) {
-                                    //изменение монет и списков в синглетоне
-                                    holder.singleton.count -= quadrClickPrice
-                                    var upg = holder.singleton.availableUpgradeList?.removeAt(0)
-                                    upg?.purchased = true
-                                    holder.singleton.updatesList.add(upg!!)
-                                    holder.singleton.allUpgradeList?.get(position)?.purchased = true
-                                    coins?.text = holder.singleton.count.toString() + " "
-                                    //проигрывание анимации
-                                    buyUpgrade(holder)
-                                    //заполнение бд
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        holder.singleton.upDB?.upgradeDao()?.update(upg!!)
-                                    }
+                            if (holder.singleton.count >= quadrClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 4) {
+                                //изменение монет и списков в синглетоне
+                                holder.singleton.count -= quadrClickPrice
+                                var upg = holder.singleton.availableUpgradeList?.removeAt(0)
+                                upg?.purchased = true
+                                holder.singleton.updatesList.add(upg!!)
+                                holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                coins?.text = holder.singleton.count.toString() + " "
+                                //проигрывание анимации
+                                buyUpgrade(holder)
+                                //заполнение бд
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
+                            }
+                            //updateItems(holder, position)
                         }
                         5 -> {
-                                if (holder.singleton.count >= megaClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 5) {
-                                    //изменение монет и списков в синглетоне
-                                    holder.singleton.count -= megaClickPrice
-                                    var upg = holder.singleton.availableUpgradeList?.removeAt(0)
-                                    upg?.purchased = true
-                                    holder.singleton.updatesList.add(upg!!)
-                                    holder.singleton.allUpgradeList?.get(position)?.purchased = true
-                                    coins?.text = holder.singleton.count.toString() + " "
-                                    //проигрывание анимации
-                                    buyUpgrade(holder)
-                                    //заполнение бд
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        holder.singleton.upDB?.upgradeDao()?.update(upg!!)
-                                    }
+                            if (holder.singleton.count >= megaClickPrice && holder.singleton.availableUpgradeList?.get(0)?.income == 5) {
+                                //изменение монет и списков в синглетоне
+                                holder.singleton.count -= megaClickPrice
+                                var upg = holder.singleton.availableUpgradeList?.removeAt(0)
+                                upg?.purchased = true
+                                holder.singleton.updatesList.add(upg!!)
+                                holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                coins?.text = holder.singleton.count.toString() + " "
+                                //проигрывание анимации
+                                buyUpgrade(holder)
+                                //заполнение бд
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    holder.singleton.upDB?.upgradeDao()?.update(upg!!)
                                 }
+                            }
                         }
                     }
                 }
         }
+
+    private fun updateItems(holder: MyViewHolder, position: Int) {
+        val index = upgrades[position].income
+        when (index){
+            2 -> {
+                holder.descriptionTextView?.text = "Getting 2 UpCoins for one click"
+                holder.incomeTextView?.text = "+2/click "
+                holder.imageView?.setImageResource(R.drawable.ic_double_click)
+                holder.priceTextView?.text = "500 "
+            }
+            3 -> {
+                holder.descriptionTextView?.text = "Getting 3 UpCoins for one click"
+                holder.incomeTextView?.text = "+3/click "
+                holder.imageView?.setImageResource(R.drawable.ic_triple_click)
+                holder.priceTextView?.text = "1250 "
+                //if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+            }
+            4 -> {
+                holder.descriptionTextView?.text = "Getting 4 UpCoins for one click"
+                holder.incomeTextView?.text = "+4/click "
+                holder.imageView?.setImageResource(R.drawable.ic_qudr_click)
+                holder.priceTextView?.text = "3000 "
+                //if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+            }
+            5 -> {
+                holder.descriptionTextView?.text = "Getting 5 UpCoins for one click"
+                holder.incomeTextView?.text = "+5/click "
+                holder.imageView?.setImageResource(R.drawable.ic_mega_click)
+                holder.priceTextView?.text = "10000 "
+                //if (holder.singleton.allUpgradeList?.get(position-1)?.purchased == false) holder.itemView.setBackgroundResource(R.drawable.button_selector_unavailable)
+            }
+        }
+    }
 
         private fun buyUpgrade(holder: MyViewHolder){
             holder.buyTextView?.text = ""
