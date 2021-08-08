@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/button_selector"
     android:layout_marginBottom="16dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:clickable="true"
     app:layoutDescription="@xml/recyclerview_item_upgrade_scene"
     app:layout_constraintBottom_toBottomOf="parent"

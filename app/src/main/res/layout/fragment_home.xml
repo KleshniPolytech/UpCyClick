@@ -95,6 +95,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <HorizontalScrollView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbarStyle="outsideInset">
@@ -104,66 +106,178 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/common_count"
-                    android:layout_width="258dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/button_selector"
-                    android:drawableStart="@drawable/ic_common_scroll"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/roboto"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/common_scroll"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:translationZ="4dp"
-                   />
-
-                <Button
-                    android:id="@+id/rare_count"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="258dp"
                     android:layout_height="45dp"
-                    android:layout_gravity="start"
+                    android:background="@drawable/button_selector"
+                    android:layout_marginBottom="8dp">
+
+                    <View
+                        android:id="@+id/commonScroll"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/ic_common_scroll"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/commonCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="x0"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/commonScroll"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/commonTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Common scroll"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/commonCount"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/commonIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="+0/sec"
+                        android:textColor="@color/primaryColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/commonTitle"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="258dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/button_selector"
                     android:layout_marginStart="20dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/button_selector"
-                    android:drawableStart="@drawable/ic_rare_scroll"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/roboto"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/rare_scroll"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:translationZ="4dp"
-                   />
+                    android:layout_marginBottom="8dp">
 
-                <Button
-                    android:id="@+id/legendary_count"
+                    <View
+                        android:id="@+id/rareScroll"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/ic_rare_scroll"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/rareCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="x0"
+                        android:textColor="#039be5"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/rareScroll"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/rareTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Rare scroll"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/rareCount"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/rareIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="+0/sec"
+                        android:textColor="#039be5"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/rareTitle"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="258dp"
                     android:layout_height="45dp"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@drawable/button_selector"
-                    android:drawableStart="@drawable/ic_legendary_scroll"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/roboto"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/legendary_scroll"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:translationZ="4dp"
-                    />
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp">
+
+                    <View
+                        android:id="@+id/legScroll"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/ic_legendary_scroll"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/legCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="x0"
+                        android:textColor="#D56225"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/legScroll"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/legTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Legendary scroll"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/legCount"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/legIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="+0/sec"
+                        android:textColor="#D56225"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/legTitle"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
         </HorizontalScrollView>

@@ -18,9 +18,13 @@ class HomeFragment : Fragment() {
     private lateinit var toQuizButton: Button
     private lateinit var coinCountTextView: TextView
 
-    private lateinit var commonButton: Button
-    private lateinit var rareButton: Button
-    private lateinit var legendaryButton: Button
+    private lateinit var commonCount: TextView
+    private lateinit var rareCount: TextView
+    private lateinit var legendaryCount: TextView
+
+    private lateinit var commonIncome: TextView
+    private lateinit var rareIncome: TextView
+    private lateinit var legendaryIncome: TextView
 
     lateinit var appInstance: AppSingleton
 
@@ -39,9 +43,13 @@ class HomeFragment : Fragment() {
         coinCountTextView = view.findViewById(R.id.coin_count)
         toQuizButton = view.findViewById(R.id.to_shop_button)
 
-        commonButton = view.findViewById(R.id.common_count)
-        rareButton = view.findViewById(R.id.rare_count)
-        legendaryButton = view.findViewById(R.id.legendary_count)
+        commonCount = view.findViewById(R.id.commonCount)
+        rareCount = view.findViewById(R.id.rareCount)
+        legendaryCount = view.findViewById(R.id.legCount)
+
+        commonIncome = view.findViewById(R.id.commonIncome)
+        rareIncome = view.findViewById(R.id.rareIncome)
+        legendaryIncome = view.findViewById(R.id.legIncome)
 
         coinCountTextView.text = appInstance.count.toString()
 
@@ -57,9 +65,18 @@ class HomeFragment : Fragment() {
                 .navigate(HomeFragmentDirections.actionHomeFragmentToQuizFragment())
         }
 
-        if (isCommonExist()) commonButton.text = "Common scroll   x${appInstance.boughtCommonScrollList!!.size}"
-        if (isRareExist()) rareButton.text = "Rare scroll   x${appInstance.boughtRareScrollList!!.size}"
-        if (isLegendaryExist()) legendaryButton.text = "Legendary scroll   x${appInstance.boughtLegendaryScrollList!!.size}"
+        if (isCommonExist()) {
+            commonCount.text = "x${appInstance.boughtCommonScrollList!!.size}"
+            commonIncome.text = "${appInstance.boughtCommonScrollList!!.size * appInstance.commonScrollIncome}/sec"
+        }
+        if (isRareExist()) {
+            rareCount.text = "x${appInstance.boughtRareScrollList!!.size}"
+            rareIncome.text = "${appInstance.boughtRareScrollList!!.size * appInstance.rareScrollIncome}/sec"
+        }
+        if (isLegendaryExist()) {
+            legendaryCount.text = "x${appInstance.boughtLegendaryScrollList!!.size}"
+            legendaryIncome.text = "${appInstance.boughtLegendaryScrollList!!.size * appInstance.legendaryScrollIncome}/sec"
+        }
 
         if (!appInstance.coinCounterLaunched) GlobalScope.launch(Dispatchers.Main) {
             appInstance.coinCounterLaunched = true

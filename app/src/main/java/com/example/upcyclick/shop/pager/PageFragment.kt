@@ -9,15 +9,19 @@ import android.view.ViewGroup
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.R
 import com.example.upcyclick.AppSingleton
+import com.example.upcyclick.shop.ShopFragment
+import com.example.upcyclick.shop.ShopFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +34,9 @@ class PageFragment : Fragment() {
     val legendaryPrice: Int = 50000
 
     lateinit var singleton: AppSingleton
+
+    private lateinit var toQuizButton: Button
+    private lateinit var toMainButton: Button
 
     private var mPage = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +62,17 @@ class PageFragment : Fragment() {
             val commonScroll = view.findViewById<ConstraintLayout>(R.id.lay_1)
             val rareScroll = view.findViewById<ConstraintLayout>(R.id.lay_2)
             val legendaryScroll = view.findViewById<ConstraintLayout>(R.id.lay_3)
+
+            toQuizButton = view.findViewById(R.id.button_quiz)
+            toQuizButton.setOnClickListener {
+                view.findNavController()
+                    .navigate(ShopFragmentDirections.actionShopFragmentToQuizFragment())
+            }
+            toMainButton = view.findViewById(R.id.button_get_coins)
+            toMainButton.setOnClickListener {
+                view.findNavController()
+                    .navigate(ShopFragmentDirections.actionShopFragmentToHomeFragment())
+            }
 
             val qwe = view.findViewById<MotionLayout>(R.id.constraintLayout)
             qwe.setTransitionListener(object : MotionLayout.TransitionListener {
@@ -193,6 +211,7 @@ class PageFragment : Fragment() {
             }
 
         }
+
 
         return view
     }

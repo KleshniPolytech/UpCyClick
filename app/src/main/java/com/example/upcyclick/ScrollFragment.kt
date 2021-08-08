@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upcyclick.database.entity.Scroll
@@ -40,6 +41,7 @@ class ScrollFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_scroll, container, false)
 
         init(view)
+        initListeners(view)
 
         recyclerView
         return view
@@ -52,13 +54,9 @@ class ScrollFragment : Fragment() {
         toShop = v.findViewById(R.id.to_shop_button)
         coins = v.findViewById(R.id.coinCount)
 
-
-
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
-
         appInstance = AppSingleton.getInstance(this.requireContext())
-
 
         val job = lifecycleScope.launch(Dispatchers.IO) {
             list =  appInstance.upDB?.scrollDao()?.getAllPurchasedScrolls() ?: listOf()
@@ -75,6 +73,13 @@ class ScrollFragment : Fragment() {
         }
     }
 
+    private fun initListeners(v: View) {
+        toShop.setOnClickListener {
+            v.findNavController().
+                navigate(ScrollFragmentDirections.actionScrollFragmentToShopFragment())
+        }
+    }
+
     private suspend fun updateCoinCount() {
         lifecycleScope.launch {
             while (true) {
@@ -88,8 +93,8 @@ class ScrollFragment : Fragment() {
         super.onResume()
     }
     private fun hide() {
-        plusShop.visibility = View.INVISIBLE
-        donthave.visibility = View.INVISIBLE
-        toShop.visibility = View.INVISIBLE
+        plusShop.visibility = View.GONE
+        donthave.visibility = View.GONE
+        toShop.visibility = View.GONE
     }
 }
