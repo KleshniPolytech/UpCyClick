@@ -104,6 +104,14 @@ class ShopFragment : Fragment() {
             }
         })
 
+        if (singleton.fromScrollsToShop){
+            singleton.fromScrollsToShop = false
+//            var tab = tabLayout.getTabAt(1)
+//            tab?.select()
+            tabLayout.setScrollPosition(2, 0f, true)
+            viewPager.setCurrentItem(2)
+        }
+
         tvCoins = view.findViewById(R.id.coinCount)
 
         println(AppSingleton.getInstance(this.requireContext()).count)

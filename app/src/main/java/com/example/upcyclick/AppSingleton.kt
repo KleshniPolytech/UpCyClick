@@ -11,6 +11,8 @@ import kotlinx.coroutines.*
 
 class AppSingleton private constructor(var context: Context) {
 
+    var fromScrollsToShop: Boolean = false
+
     var coinCounterLaunched = false
 
     var count: Int = 0

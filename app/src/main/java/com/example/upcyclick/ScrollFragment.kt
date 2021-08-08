@@ -75,6 +75,7 @@ class ScrollFragment : Fragment() {
 
     private fun initListeners(v: View) {
         toShop.setOnClickListener {
+            appInstance.fromScrollsToShop = true
             v.findNavController().
                 navigate(ScrollFragmentDirections.actionScrollFragmentToShopFragment())
         }
