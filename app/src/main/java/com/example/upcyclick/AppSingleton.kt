@@ -60,7 +60,7 @@ class AppSingleton private constructor(var context: Context) {
         count = pref!!.getInt("Count", 0)
 
         CoroutineScope(Dispatchers.IO).launch {
-            upDB = Room.inMemoryDatabaseBuilder(context, UpDB::class.java).build()
+            upDB = Room.databaseBuilder(context, UpDB::class.java, "UpDB").build()
             if (upDB?.scrollDao()?.getAll()?.isEmpty() == true) {
                 fillScrollDB()
             }
