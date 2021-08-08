@@ -74,6 +74,7 @@ class  UpgradeAdapter(private val upgrades: List<Upgrade>, var coins: TextView?)
                                 upg?.purchased = true
                                 holder.singleton.updatesList.add(upg!!)
                                 holder.singleton.allUpgradeList?.get(position)?.purchased = true
+                                
                                 coins?.text = holder.singleton.count.toString() + " "
                                 //проигрывание анимации
                                 buyUpgrade(holder)
